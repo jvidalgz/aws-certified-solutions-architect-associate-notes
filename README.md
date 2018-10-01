@@ -14,6 +14,7 @@ AWS Certified Solutions Architect  Associate -  Notes
         - [Policies and Groups](#policies-and-groups)
         - [Federated Users](#federated-users)
         - [Identity-based and Resource-based Policies](#identity-based-and-resource-based-policies)
+    - [Security Features Outside of IAM](#security-features-outside-of-iam)
     - [Warnings](#iam-warnings)
 ## IAM
 * AWS Identity and Access Management (IAM) is a web service that helps you securely control access to AWS resources. You use IAM to control who is authenticated (signed in) and authorized (has permissions) to use resources.
@@ -69,6 +70,13 @@ Federated users don't have permanent identities in your AWS account the way that
  * **Inline policies** – Policies that you create and manage and that are embedded directly into a single user, group, or role.
  *Resource-based policies* control what actions a specified principal can perform on that resource and under what conditions. Resource-based policies are inline policies, and there are no managed resource-based policies.
  *Trust policies* are resource-based policies that are attached to a role.  They define which principals can assume the role.
+### Security Features Outside of IAM
+Some AWS products have other ways to secure their resources
+* Amazon EC2: You log into an instance with a key pair (for Linux instances) or using a user name and password (for Microsoft Windows instances).
+* Amazon RDS: You log into the database engine with a user name and password that are tied to that database.
+* Amazon EC2 and Amazon RDS: You use security groups to control traffic to an instance or database.
+* Amazon WorkSpaces: Users sign in to a desktop with a user name and password.
+* Amazon WorkDocs: Users get access to shared documents by signing in with a user name and password.
 ### IAM Warnings
 * If a request to change some data is successful, the change is committed and safely stored. However, the change must be replicated across IAM, which can take some time. Such changes include creating or updating users, groups, roles, or policies. We recommend that you do not include such IAM changes in the critical, high-availability code paths of your application. 
 * Policies and Users: Actions or resources that are not explicitly allowed are denied by default.
