@@ -1,5 +1,13 @@
 AWS Certified Solutions Architect  Associate -  Notes
 =====================================
+- [VPC](#vpc)
+    - [NAT Instances vs NAT Gateways](#nat-instances-vs-nat-gateways)
+    - [VPC Peering](#vpc-peering)
+    - [VPC Access types](#vpc-access-types)
+        - [Direct Connect](#direct-connect)
+        - [AWS VPN CloudHub](#aws-vpn-cloudhub)
+    - [VPC Warnings](#vpc-warnings)
+    - [VPC Limits](#vpc-limits)
 - [IAM](#iam)
     - [Features](#features)
     - [Accesing IAM](#accesing-iam)   
@@ -18,6 +26,67 @@ AWS Certified Solutions Architect  Associate -  Notes
     - [IAM Best Practices and Use Cases](#iam-best-practices-and-use-cases)
     - [Identities (Users, Groups, and Roles)](#identities-(users,-groups,-and-roles))
     - [Warnings](#iam-warnings)
+## VPC
+* Three subnet types: Private, Public and VPN
+* Single Region, multi AZs
+* Security Groups:
+    * Resources level traffic firewall (EC2 instance, ELB, etc..)
+    * Ingress and Egress
+    * Stateful
+* Access Control Lists:
+    * Source and Protocol filtering
+    * Subnet level trafic firewall
+    * Stateless
+### NAT Instances vs NAT Gateways
+| NAT Instances                                        | NAT Gateways                                                 |                
+| ---------------------------------------------------- |:------------------------------------------------------------:|     
+| Use script to manage fail over between instances     | Highly available, are implement with redundancy in each AZs  |
+| Depends on the bandwidth of intance type             | Is a service                                                 |
+| Manage by you                                        | Managed by AWS                                               |
+| A generic AMI that's configured to perform NAT       | Software is optimized for handling NAT traffic               |
+| Manual port fordwarding                              | Port fordwarding NOT supported                               |
+| Use a bastion server                                 | Bastion server not supported                                 |
+| View CloudWatch alarms                               | Traffic metrics not supported                                |
+ ### VPC Peering
+* Single region Inter-VPC routing
+* Connection between same or different AWS account
+* DNS supported
+ ### VPC Access types
+| VPN                                        | Gateways                                         |            
+| ------------------------------------------ |:------------------------------------------------:| 
+| Hardware-based VPN  (w/ port redundancy)   | Internet Gateway (IGW)                           |
+| Direct Connect                             | Virtual Private Gateway                          |
+| VPN CloudHub                               | Customer Gateway                                 |   
+| Software VPN                               | Software is optimized for handling NAT traffic   |
+ #### Direct Connect
+* Predictable bandwidth
+* Predictable performance/consistent network experience
+* Support for VLAN Trunking (802.1Q)
+* Can be partitioned into multiple Virtual Interfaces
+#### AWS VPN CloudHub
+* Direct connection to VPC for Branch offices 
+### VPC Warnings
+* Subnets do not span over AZs
+* Update the inbound or outbound rules for your VPC Security Groups to reference Security Groups in the peered VPC
+* VPC Peering: Can't overlap network addresses
+* Direct Connect: 
+    * Bandwidth of 1 Gbps or 10 Gbps
+    * Performance and bandwidth depends on distance of AWS Region / Edge Router
+### VPC Limits
+* The first four IP addresses and the last IP address in each subnet CIDR block are not available for you to use, and cannot be assigned to an instance. For example, in a subnet with CIDR block 10.0.0.0/24, the following five IP addresses are reserved:
+    
+   * 10.0.0.0: Network address.
+    
+   * 10.0.0.1: Reserved by AWS for the VPC router.
+    
+   * 10.0.0.2: Reserved by AWS. The IP address of the DNS server is always the base of the VPC network range plus two; however, we also reserve the base of each subnet range plus two. For VPCs with multiple CIDR blocks, the IP address of the DNS server is located in the primary CIDR. For more information, see Amazon DNS Server.
+    
+   * 10.0.0.3: Reserved by AWS for future use.
+    
+   * 10.0.0.255: Network broadcast address. We do not support broadcast in a VPC, therefore we reserve this address.
+* CIDR : 16-28
+* VPC Peering: 50 VPC Peers per VPC, up to 125 by request  
+
 ## IAM
 * AWS Identity and Access Management (IAM) is a web service that helps you securely control access to AWS resources. You use IAM to control who is authenticated (signed in) and authorized (has permissions) to use resources.
 ### Features
