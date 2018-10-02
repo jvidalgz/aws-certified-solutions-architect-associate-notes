@@ -21,6 +21,7 @@ AWS Certified Solutions Architect  Associate -  Notes
     - [Classic Load Balancer (CLB)](#classic-load-balancer-(clb))
     - [Application Load Balancer (ALB)](#application-load-balancer-(alb))
     - [Warnings](#lb-warnings)
+- [Auto Scaling](#auto-scaling)
 - [IAM](#iam)
     - [Features](#features)
     - [Accesing IAM](#accesing-iam)   
@@ -196,6 +197,14 @@ AWS Certified Solutions Architect  Associate -  Notes
 * Classic LB: 
     * Doesn't support Elastic IP 
     * Can't reach through IP address, only DNS name
+    
+## Auto Scaling     
+* Elasticity
+* Boostraping / Dynamic configuration
+* CloudWatch or manual schedule configuration
+* Notifications
+* It's free
+* Region Wide
     
 ## IAM
 * AWS Identity and Access Management (IAM) is a web service that helps you securely control access to AWS resources. You use IAM to control who is authenticated (signed in) and authorized (has permissions) to use resources.
