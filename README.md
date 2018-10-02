@@ -22,6 +22,12 @@ AWS Certified Solutions Architect  Associate -  Notes
     - [Application Load Balancer (ALB)](#application-load-balancer-(alb))
     - [Warnings](#lb-warnings)
 - [Auto Scaling](#auto-scaling)
+- [Elastic Block Storage (EBS)](#elastic-block-storage-(ebs))
+    - [Increasing IOPS Performance](#increasing-iops-performance)
+    - [EBS-optimized instances](#ebs-optimized-instances)
+    - [EBS Snapshots Characteristics](#ebs-snapshots-characteristics)
+    - [EBS Snapshots Features](#ebs-snapshots-features)
+    - [EBS Warnings](#ebs-warnings)
 - [IAM](#iam)
     - [Features](#features)
     - [Accesing IAM](#accesing-iam)   
@@ -205,6 +211,37 @@ AWS Certified Solutions Architect  Associate -  Notes
 * Notifications
 * It's free
 * Region Wide
+
+## Elastic Block Storage (EBS)
+* Does not need to be attached to an instance
+* Can be transferred between Availability Zones
+* EBS volume data is replicated across multiple servers in an Availability Zone
+* Encryption of EBS data volumes, boot volumes and snapshots
+* Designed for an annual failure rate (AFR) of between 0.1% - 0.2% a SLA 99.95%
+### Increasing IOPS Performance
+* Multiple stripped gp2 or standard volumes (typically RAID 0)
+* Multiple stripped PIOPS volumes (typically RAID 0)
+* Function of the guest OS
+### EBS-optimized instances
+* Dedicated capacity for Amazon EBS I/O
+* EBS-Optimized intances are designed for use with all EBS volume types
+* Max bandwith: 400 Mbps - 12000 Mbps
+* IOPS: 3000 - 65000
+* gp-ssd within 10% of baseline and burst performance 99.9% of the time
+* PIOPS within 10% of provisioned and burst performance 99.9% of the time
+* Additional hourly fee
+### EBS Snapshots Characteristics
+* Point-in-time snapshot
+* Supports incremental snapshots
+* Billed only for changed blocks
+* Deleted a snapshot removes only the data not needed by any other snapshot
+### EBS Snapshots Features
+* Resizing EBS volumes
+* Sharing EBS snapshots 
+* Coping  EBS snapshots across regions
+### EBS Warnings
+* Cannot be attached to more than one instance at the same time
+* Privisioned IOPS: maximun ratio of 50:1 between IOPS and volume size
     
 ## IAM
 * AWS Identity and Access Management (IAM) is a web service that helps you securely control access to AWS resources. You use IAM to control who is authenticated (signed in) and authorized (has permissions) to use resources.
