@@ -17,6 +17,10 @@ AWS Certified Solutions Architect  Associate -  Notes
     - [Placement Groups](#placement-groups)
     - [Warnings](#ec2-warnings)
     - [Limits](#ec2-limits)
+- [Load Balancer](#load-balancer)
+    - [Classic Load Balancer (CLB)](#classic-load-balancer-(clb))
+    - [Application Load Balancer (ALB)](#application-load-balancer-(alb))
+    - [Warnings](#lb-warnings)
 - [IAM](#iam)
     - [Features](#features)
     - [Accesing IAM](#accesing-iam)   
@@ -139,6 +143,60 @@ AWS Certified Solutions Architect  Associate -  Notes
 * The name must be unique (like S3 unique name convention) 
 * Cannot be merged  
 
+## Load Balancer
+### Classic Load Balancer (CLB)
+* Region wide load balancer (not an VM / Appliance)
+* Can be used internally or externally
+* Layer 4 or Layer 7
+* SSL termination and processing
+* Cookie-based sticky sessions
+* Integrate with Auto Scaling
+* ELB EC2 health checks / CloudWatch
+* Integrate with Route 53
+* Supported ports:
+    * 25 (SMTP) 
+    * 80/443  (HTTP/HTTPS)
+    * 1024-65535
+* Support Domain Zone Apex
+* Support IPv4 and IPv6
+* Integrate with CloudTrail for log security analysis
+* Multiple SSL certificates required multiples ELBs
+* Wildcard are supported
+* Associate with DNS 
+### Application Load Balancer (ALB)
+* Layer 7 Only
+* Content-based routing
+* Region Wide load balancer
+* Support for microservices and containers
+* Integrate with ECS
+* Better performance for realtime streaming
+* Reduced hourly cost
+* Deletion protection
+* Better health checks and CloudWatch metrics
+* Listeners:
+    * Define the port and protocol 
+    * Each ALB needs at least on listener
+    * Up to 10 listeners
+    * Routing rules are defined on listeners
+* Target groups:
+    * Logical grouping of targets
+    * Made up of EC2 instances or containers
+    * Can exist independently from the ALB
+    * Region-based but can be associated with an auto scaling group
+* Rules:
+    * Fordwards incoming request to specific target groups 
+    * One or more rules
+* Improved Health Check:
+    * Custom response codes: 200-399
+    * Detailed health check failures displayed in the API and management console
+    * Detailed access to log information
+    * Saved to an S3 bucket every 5 or 60 minutes
+* About 10% cheaper
+### LB Warnings
+* Classic LB: 
+    * Doesn't support Elastic IP 
+    * Can't reach through IP address, only DNS name
+    
 ## IAM
 * AWS Identity and Access Management (IAM) is a web service that helps you securely control access to AWS resources. You use IAM to control who is authenticated (signed in) and authorized (has permissions) to use resources.
 ### Features
