@@ -8,6 +8,15 @@ AWS Certified Solutions Architect  Associate -  Notes
         - [AWS VPN CloudHub](#aws-vpn-cloudhub)
     - [VPC Warnings](#vpc-warnings)
     - [VPC Limits](#vpc-limits)
+- [EC2](#ec2)
+    - [EC2 On-demand](#ec2-on-demand)
+    - [EC2 Reserved Instance](#ec2-reserved-instance)
+    - [Spot Instance](#spot-instances)
+    - [Dedicated Instances](#dedicated-instances)
+    - [High Performance Computing (HPC)](#high-performance-computing-(hpc))
+    - [Placement Groups](#placement-groups)
+    - [Warnings](#ec2-warnings)
+    - [Limits](#ec2-limits)
 - [IAM](#iam)
     - [Features](#features)
     - [Accesing IAM](#accesing-iam)   
@@ -85,7 +94,50 @@ AWS Certified Solutions Architect  Associate -  Notes
     
    * 10.0.0.255: Network broadcast address. We do not support broadcast in a VPC, therefore we reserve this address.
 * CIDR : 16-28
-* VPC Peering: 50 VPC Peers per VPC, up to 125 by request  
+* VPC Peering: 50 VPC Peers per VPC, up to 125 by request
+
+## EC2
+* On-demand: paid for use
+* Reserved Intances:
+    * Standard
+    * Scheduled
+* Spot
+* Dedicated:
+    * Host
+    * Instance
+### EC2 On-demand
+* Low cost and flexibility with no up front cost
+* Ideal for autoscaling groups and unpredictable workloads
+* Dev / Test
+### EC2 Reserved Instance
+* Steady state and predictable usage
+* Aplications that need reserved capacity
+### Spot Instances
+* Flexible start and end times
+* Grid computing and HPC
+* Very low hourly compute cost
+### Dedicated Instances
+* Predictable performance
+* Complete Isolation
+* Most expensive
+### High Performance Computing (HPC)
+* Bath processing of compute intensive workloads
+* Requires high performance CPU, network and storage
+* Jumbo frames are typically required: Transport large amount of data quicker than over a traditional  network (a lot of I/O - NFS is suitable in this case)
+    * Jumbo frame: up to 9000 bytes of data (vs standard frame only 1500 bytes)
+* Supported on AWS through enhanced networking (single rout I/O virtualization (SR-IOV))
+### Placement Groups 
+* A logical grouping of instances in a single availability zone
+* Keep them as close as possible to each other in order to allow for low latency and high performance between these instances
+* Can span peered VPCs (but not at full performance)
+### EC2 Warnings
+* Placement Groups: 
+    * Can't span multiple availability zones
+    * Reserved instances are supported on an instance level but you cannot explicity reserved CAPACITY for a placement group
+    * You can't merge them 
+### EC2 Limits
+* The name must be unique (like S3 unique name convention) 
+* Cannot be merged  
 
 ## IAM
 * AWS Identity and Access Management (IAM) is a web service that helps you securely control access to AWS resources. You use IAM to control who is authenticated (signed in) and authorized (has permissions) to use resources.
