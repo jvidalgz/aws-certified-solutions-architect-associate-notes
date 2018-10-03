@@ -28,6 +28,8 @@ AWS Certified Solutions Architect  Associate -  Notes
     - [EBS Snapshots Characteristics](#ebs-snapshots-characteristics)
     - [EBS Snapshots Features](#ebs-snapshots-features)
     - [EBS Warnings](#ebs-warnings)
+- [Elastic File System](#elastic-file-system-(efs))
+    - [Limits](#efs-limits)
 - [IAM](#iam)
     - [Features](#features)
     - [Accesing IAM](#accesing-iam)   
@@ -243,6 +245,18 @@ AWS Certified Solutions Architect  Associate -  Notes
 * Cannot be attached to more than one instance at the same time
 * Privisioned IOPS: maximun ratio of 50:1 between IOPS and volume size
     
+## Elastic File System (EFS)
+* Simple, petabytes scalable file storage for use with EC2 instances
+* EFS file systems are elastic, and automatically grow and shrink as you add and remove files
+* Stored redundantly across multiples AZs
+* Big Data and analytics, media processing, workflows, content management, web, home directories
+* Supports NFS 4.1
+* ON premises access enabled via Direct Connect
+
+### EFS Limits 
+* 1 to 1000 of EC2 instances, from multiple AZs, concunrrently
+* By default, you can create up to 10 file systems per AWS account per region
+
 ## IAM
 * AWS Identity and Access Management (IAM) is a web service that helps you securely control access to AWS resources. You use IAM to control who is authenticated (signed in) and authorized (has permissions) to use resources.
 ### Features
