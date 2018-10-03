@@ -30,6 +30,9 @@ AWS Certified Solutions Architect  Associate -  Notes
     - [EBS Warnings](#ebs-warnings)
 - [Elastic File System](#elastic-file-system-(efs))
     - [Limits](#efs-limits)
+- [Simple Storage Service S3](#simple-storage-service-s3)
+    - [S3 Features](#s3-features)
+    - [Securing S3](#securing-s3)
 - [IAM](#iam)
     - [Features](#features)
     - [Accesing IAM](#accesing-iam)   
@@ -256,6 +259,19 @@ AWS Certified Solutions Architect  Associate -  Notes
 ### EFS Limits 
 * 1 to 1000 of EC2 instances, from multiple AZs, concunrrently
 * By default, you can create up to 10 file systems per AWS account per region
+
+## Simple Storage Service S3
+### S3 Features
+* File versioning
+* Cross-region replication (CRR)
+* Data lifecycle management 
+* MFA Delete
+* Permissions management
+* Time-limited access to objects
+### Securing S3
+* Bucket policies
+* MFA Delete
+* Backing up your Bucket to another Bucket in a different account
 
 ## IAM
 * AWS Identity and Access Management (IAM) is a web service that helps you securely control access to AWS resources. You use IAM to control who is authenticated (signed in) and authorized (has permissions) to use resources.
