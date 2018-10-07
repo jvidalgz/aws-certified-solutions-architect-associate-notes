@@ -33,6 +33,10 @@ AWS Certified Solutions Architect  Associate -  Notes
 - [Simple Storage Service S3](#simple-storage-service-s3)
     - [S3 Features](#s3-features)
     - [Securing S3](#securing-s3)
+- [Glacier](#glacier)
+- [Storage Gateway](#storage-gateway)
+- [CloudFront](#cloudfront)
+    - [Limits](#cloudfront-limits)
 - [IAM](#iam)
     - [Features](#features)
     - [Accesing IAM](#accesing-iam)   
@@ -247,7 +251,7 @@ AWS Certified Solutions Architect  Associate -  Notes
 ### EBS Warnings
 * Cannot be attached to more than one instance at the same time
 * Privisioned IOPS: maximun ratio of 50:1 between IOPS and volume size
-    
+
 ## Elastic File System (EFS)
 * Simple, petabytes scalable file storage for use with EC2 instances
 * EFS file systems are elastic, and automatically grow and shrink as you add and remove files
@@ -273,6 +277,30 @@ AWS Certified Solutions Architect  Associate -  Notes
 * MFA Delete
 * Backing up your Bucket to another Bucket in a different account
 
+## Glacier
+* Integrates with Amazon S3 lifecycle policies
+## Storage Gateway
+* Gateway-cached volumes
+* Gateway-stored volumes
+* Gateway-virtual Tape Library (VTL)
+## CloudFront
+* A global CDN service. It integrates with other AWS products to give developers and business an easy way to distribute content to end users with low latency, high data transfer speeds and no minimum usage commitments
+* Used to deliver and entire website using a global netwotk of edge locations:
+    * Dynamic
+    * Static
+    * Streaming
+    * Interactive
+* Request for content is automatically routed to the nearest edge location for best possible performance
+* Optimized to work with other Amazon Web Services:
+    * S3
+    * EC2
+    * Elastic Load Balancing
+    * Route 53
+    
+### CloudFront Limits 
+* Up to 1000  vaults per region
+* Individual archives can be from 1 byte to 40 terabytes
+    
 ## IAM
 * AWS Identity and Access Management (IAM) is a web service that helps you securely control access to AWS resources. You use IAM to control who is authenticated (signed in) and authorized (has permissions) to use resources.
 ### Features
