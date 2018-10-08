@@ -37,6 +37,19 @@ AWS Certified Solutions Architect  Associate -  Notes
 - [Storage Gateway](#storage-gateway)
 - [CloudFront](#cloudfront)
     - [Limits](#cloudfront-limits)
+- [Relational Database Service (RDS)](#relational-database-service-(rds))
+     - [RDS Automated Backups]
+     - [RDS Restore]
+     - [RDS Warnings]
+     - [RDS Limits]
+     - [Multi-AZ Failover]
+- [DynamoDB]
+    - [Non-Ideal DynamoDB Scenarios]
+    - [DynamoDB Integration]
+    - [DynamoDB features]
+    - [Two ways to search]
+
+- [ElasticCache]
 - [IAM](#iam)
     - [Features](#features)
     - [Accesing IAM](#accesing-iam)   
@@ -300,7 +313,96 @@ AWS Certified Solutions Architect  Associate -  Notes
 ### CloudFront Limits 
 * Up to 1000  vaults per region
 * Individual archives can be from 1 byte to 40 terabytes
-    
+
+# Relational Database Service (RDS)
+* Database engine manage by AWS
+* MySQL, Oracle, Microsoft SQL Server, PostgreSQL, MariaDB, or Amazon Aurora
+* Multi-AZ deployment options
+* On-demand and reserved instance pricing
+* Magnetic, gp-ssd or PIOPS
+*  Oracle and Microsoft SQL licensing
+    * Included Licenses
+    * Bring your own license
+* Automated or manual backups
+## RDS Automated Backups
+* Continuosly tracks changes and backups your database
+* Volume snapshot of your entire DB instance, not just DB
+* On day of backups retained by default but cand be configured up to 35 days
+* Backup retention period defined during configuration
+* When you delete an RDS instance, all automated snapshots are deleted. Manual snapshots are preserved
+* Automated backups ocurr daily during a 30 minute configurable backup window
+* Automated backups are preserved for a configurable number of days (retention period)
+## RDS Restore
+* RDS combines daily backups in conjuntion with transaction logs to restore the DB instance to any point during the retention period
+## RDS Warnings
+* You cannot restore from a DB snapshot to an existing DB instance
+* Only default DB parameters and security groups are restored
+## RDS Limits
+* Up to the last five minutes, RDS uploads transaction logs for DB instances to Amazon S3 every 5 minutes. 
+## Multi-AZ Failover
+* Multi-AZ RDS deployment designed for HA
+* Synchronous replication in a secondary AZ
+* DB snapshots always taken against standby instance
+* AWS automatically adjusts DNS records when needed
+* Multi-AZ is different from a RDS read replica
+
+# Amazon DynamoDB
+* DynamoDB is a fully managed, highly available and scalable NoSQL database
+* Automatically and synchronously replicates data across three AZ
+* SSDs and limiting indexing on attributes provides high throughput and low latency
+* ElasticCache can be used in front of DynamoDB
+    * Offload high amounts of reads for non-frecuently changed data
+* Ideal for existing or new applications that need:
+    * A flexible NoSQL database with low read and write latencies
+    * The ability o scale storage and throughput up or down as needed without code changes or downtime
+## Non-Ideal DynamoDB Scenarios
+* Pre-written applications tied to a traditional relational database
+* Join and/or complex transactions
+* BLOB data (binary large objects)
+* Large data with low I/O rate
+## DynamoDB Integration
+* Amazon Elastic MapReduce: Allows enterprises perform analytics of large datasets
+* Amazon RedShift: enable advanced bussiness intelligence
+* Amazon Data Pipeline: Automates data movement in/out  DynamoDB
+* Amazon S3: workloads that requires BLOB
+* Management console and Apis
+## DynamoDB features
+* Stores structured data in tables, indexes by a primary key
+* Tables are collection of items and items are made up of attributes (columns)
+* Primary Key can be:
+    * Single-attribute hash key
+    * Composite hash-range key
+* Secondary Index: increases performance, offload some of the workload
+* Streams: Allow you to keep track of item level changes or to get a list of all item level changes that have occur in the last 24 hrs
+* Cross-region replication: with low latency access
+* Triggers: Event driven triggers
+* Schemaless: Flexible database
+## Two ways to search
+* Query operation: find items in a table or secondary index using only primary key attribute
+* Scan operation : find every item in a table or in a secondary index. By default it will return all data attributes for every item in a table or a index. Heavy, overhead, pull down performance
+
+# ElasticCache 
+* Open-source in-memory caching engines
+    * Memcached:
+        * Widely adopted memory object caching system
+    * Redis:
+        * Popular open-source in-memory key-value store
+        * Supports data structures such as sorted sets and lists
+* Master/Slave replication and Multi-AZ
+    * Can be used to achieve cross AZ redundancy
+
+| Feature                   | Memcached  | Redis  |                
+| --------------------------|:----------:|:------:|     
+| Cache to offload DB       | ✓          |✓       |
+| Multithreaded performance | ✓          |✕       |
+| Horizontal scanning       | ✓          |✕       |
+| Multi AZ                  | ✕          |✓       |
+| Backup and restore        | ✕          |✓       |
+| Pub/Sub functionality     | ✕          |✓       |
+| Sorting and ranking       | ✕          |✓       |
+| Advanced data types       | ✕          |✓       |
+| Persistence               | ✕          |✓       |
+
 ## IAM
 * AWS Identity and Access Management (IAM) is a web service that helps you securely control access to AWS resources. You use IAM to control who is authenticated (signed in) and authorized (has permissions) to use resources.
 ### Features
