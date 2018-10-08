@@ -13,16 +13,16 @@ AWS Certified Solutions Architect  Associate -  Notes
     - [EC2 Reserved Instance](#ec2-reserved-instance)
     - [Spot Instance](#spot-instances)
     - [Dedicated Instances](#dedicated-instances)
-    - [High Performance Computing (HPC)](#high-performance-computing-(hpc))
+    - [High Performance Computing (HPC)](#high-performance-computing-hpc)
     - [Placement Groups](#placement-groups)
     - [Warnings](#ec2-warnings)
     - [Limits](#ec2-limits)
 - [Load Balancer](#load-balancer)
-    - [Classic Load Balancer (CLB)](#classic-load-balancer-(clb))
-    - [Application Load Balancer (ALB)](#application-load-balancer-(alb))
+    - [Classic Load Balancer (CLB)](#classic-load-balancer-clb)
+    - [Application Load Balancer (ALB)](#application-load-balancer-alb)
     - [Warnings](#lb-warnings)
 - [Auto Scaling](#auto-scaling)
-- [Elastic Block Storage (EBS)](#elastic-block-storage-(ebs))
+- [Elastic Block Storage (EBS)](#elastic-block-storage-ebs)
     - [Increasing IOPS Performance](#increasing-iops-performance)
     - [EBS-optimized instances](#ebs-optimized-instances)
     - [EBS Snapshots Characteristics](#ebs-snapshots-characteristics)
@@ -37,28 +37,27 @@ AWS Certified Solutions Architect  Associate -  Notes
 - [Storage Gateway](#storage-gateway)
 - [CloudFront](#cloudfront)
     - [Limits](#cloudfront-limits)
-- [Relational Database Service (RDS)](#relational-database-service-(rds))
-     - [RDS Automated Backups]
-     - [RDS Restore]
-     - [RDS Warnings]
-     - [RDS Limits]
-     - [Multi-AZ Failover]
-- [DynamoDB]
-    - [Non-Ideal DynamoDB Scenarios]
-    - [DynamoDB Integration]
-    - [DynamoDB features]
-    - [Two ways to search]
-
-- [ElasticCache]
+- [Relational Database Service (RDS)](#relational-database-service-rds)
+     - [RDS Automated Backups](#rds-automated-backups)
+     - [RDS Restore](#rds-restore)
+     - [RDS Warnings](#rds-warnings)
+     - [RDS Limits](#rds-limits)
+     - [Multi-AZ Failover](#multi-az-failover)
+- [DynamoDB](#dynamodb)
+    - [Non-Ideal DynamoDB Scenarios](#non-ideal-dynamodb-scenarios)
+    - [DynamoDB Integration](#dynamodb-integration)
+    - [DynamoDB features](#dynamodb-features)
+    - [Two ways to search](#two-ways-to-search)
+- [ElasticCache](#elasticcache)
 - [IAM](#iam)
     - [Features](#features)
     - [Accesing IAM](#accesing-iam)   
     - [Understanding How IAM Works](#understanding-how-iam-works)
-    - [Overview of Identity Management: Users](#overview-of-identity-management:-users)
-        - [First-Time Access Only](#first-time-access-only:-your-root-user-credentials)
+    - [Overview of Identity Management: Users](#overview-of-identity-management-users)
+        - [First-Time Access Only](#first-time-access-only-your-root-user-credentials)
         - [IAM Users](#iam-users)
         - [Federating Existing Users](#federating-existing-users)
-    - [Overview of Access Management: Permissions and Policies](#overview-of-access-management:-permissions-and-policies)
+    - [Overview of Access Management: Permissions and Policies](#overview-of-access-management-permissions-and-policies)
         - [Policies and Accounts](#policies-and-accounts)
         - [Policies and Users](#policies-and-users)
         - [Policies and Groups](#policies-and-groups)
@@ -66,7 +65,7 @@ AWS Certified Solutions Architect  Associate -  Notes
         - [Identity-based and Resource-based Policies](#identity-based-and-resource-based-policies)
     - [Security Features Outside of IAM](#security-features-outside-of-iam)
     - [IAM Best Practices and Use Cases](#iam-best-practices-and-use-cases)
-    - [Identities (Users, Groups, and Roles)](#identities-(users,-groups,-and-roles))
+    - [Identities (Users, Groups, and Roles)](#identities-users,-groups,-and-roles)
     - [Warnings](#iam-warnings)
 ## VPC
 * Three subnet types: Private, Public and VPN
