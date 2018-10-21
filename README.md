@@ -49,6 +49,11 @@ AWS Certified Solutions Architect  Associate -  Notes
     - [DynamoDB features](#dynamodb-features)
     - [Two ways to search](#two-ways-to-search)
 - [ElasticCache](#elasticcache)
+- [RedShift](#amazon-redshift)
+    - [Architecture](#amazon-redshift-architecture)
+        - [Leader Node](#leader-node)
+        - [Computes Nodes](#computes-nodes)
+    - [Backups and Fault Tolerance](#backups-and-fault-tolerance)
 - [IAM](#iam)
     - [Features](#features)
     - [Accesing IAM](#accesing-iam)   
@@ -417,7 +422,7 @@ AWS Certified Solutions Architect  Associate -  Notes
 ### Computes Nodes
 * Local columnar storage 
 * Parallel/distributed execution of all queries, loads, backups , restores, resizes
-### Backups and Fault Tolerance
+## Backups and Fault Tolerance
 * Continuous/Incremental backups
     * Multiple copies within cluster 
     * Continuous and incremental backups to S3
