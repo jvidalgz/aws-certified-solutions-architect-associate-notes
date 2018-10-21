@@ -54,6 +54,13 @@ AWS Certified Solutions Architect  Associate -  Notes
         - [Leader Node](#leader-node)
         - [Computes Nodes](#computes-nodes)
     - [Backups and Fault Tolerance](#backups-and-fault-tolerance)
+- [Understanding AWS Security](#understanding-aws-security)
+    - [Physical Access](#physical-access)
+    - [Security Certifications and AWS Compliance](#security-certifications-and-aws-compliance)
+    - [Shared Security Responsability](#shared-security-responsability)
+        - [AWS Responsibility](#aws-responsibility)
+        - [Our Responsibility](#our-responsibility)
+        - [Security Methods and connectivity](#security-methods-and-connectivity)
 - [IAM](#iam)
     - [Features](#features)
     - [Accesing IAM](#accesing-iam)   
@@ -440,6 +447,58 @@ AWS Certified Solutions Architect  Associate -  Notes
     * Encryption to secure data at rest
     * Audit logging and AWS CloudTrail integration
     * SOC 1/2/3, PCI-DSS, FedRamp, BAA
+
+# Understanding AWS Security
+## Physical Access
+* Secrets locations
+* Controlled physical access
+* Best in class datacenter security
+* Video Surveillance
+* Hardware refresh cycle to avoid component failure 
+* Properly decommisioned storage
+* Always on Monitoring System
+## Security Certifications and AWS Compliance
+|                           |                  
+| --------------------------|    
+| HIPAA       
+| SOC 1/SSAE 16/ISAE 3402 
+| SOC2       
+| SOC 3                  
+| PCI DSS Level 1        
+| ISO 27001     
+| FedRAMP(SM)       
+| DIACAP and FISMA      
+| ITAR              
+| FIPS 140-2              
+| CSA          
+| MPAA              
+
+## Shared Security Responsability
+### AWS Responsibility
+* Virtual host security
+* Storage security 
+* Network security
+* Data center security
+* Database Security
+### Our Responsibility
+* AWS account security (MFA, API)
+* Operating system
+* Database
+* Applications
+* Data Encryption
+* Authentication
+* Network integrity
+### Security Methods and connectivity
+* Virtual Private Cloud (VPC)
+* Dedicated connectivity
+* Encryption
+* Web Application Firewalls (WAF)
+* DDoS Mitigation
+* Dedicated Servers
+* Inventory and Configuration
+* Monitoring and Logging
+* Penetration Testing
+
 ## IAM
 * AWS Identity and Access Management (IAM) is a web service that helps you securely control access to AWS resources. You use IAM to control who is authenticated (signed in) and authorized (has permissions) to use resources.
 ### Features
