@@ -402,6 +402,39 @@ AWS Certified Solutions Architect  Associate -  Notes
 | Advanced data types       | ✕          |✓       |
 | Persistence               | ✕          |✓       |
 
+# Amazon RedShift 
+* Fast and fully managed petabyte-scale relational data warehouse service.
+* Analyze all your data using your existing bussines intelligence tools.
+* HDD and SSD platforms.
+* Starts at $0.25/hour
+* Scale to $1000/TB/year
+## Amazon RedShift Architecture
+### Leader Node
+* Simple SQL end point
+* Stores metadata
+* Optimizes query plan
+* Coordinates query execution
+### Computes Nodes
+* Local columnar storage 
+* Parallel/distributed execution of all queries, loads, backups , restores, resizes
+### Backups and Fault Tolerance
+* Continuous/Incremental backups
+    * Multiple copies within cluster 
+    * Continuous and incremental backups to S3
+    * Continuous and incremental backups across regions
+    * Streaming restore
+* Fault Tolerance
+    * Disk failures
+    * Node failures
+    * Network failures
+    * Availability zone/region level disasters
+* Security 
+    * Load encrypted from S3
+    * SSL to secure data in transit 
+    * Amazon VPc for network isolation
+    * Encryption to secure data at rest
+    * Audit logging and AWS CloudTrail integration
+    * SOC 1/2/3, PCI-DSS, FedRamp, BAA
 ## IAM
 * AWS Identity and Access Management (IAM) is a web service that helps you securely control access to AWS resources. You use IAM to control who is authenticated (signed in) and authorized (has permissions) to use resources.
 ### Features
