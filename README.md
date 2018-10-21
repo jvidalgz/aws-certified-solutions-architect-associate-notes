@@ -61,6 +61,9 @@ AWS Certified Solutions Architect  Associate -  Notes
         - [AWS Responsibility](#aws-responsibility)
         - [Our Responsibility](#our-responsibility)
         - [Security Methods and connectivity](#security-methods-and-connectivity)
+- [Route 53](#route-53)
+    - [Routing Policies](#routing-policies)
+    - [Warnings](#route-53-warnings)
 - [IAM](#iam)
     - [Features](#features)
     - [Accesing IAM](#accesing-iam)   
@@ -498,6 +501,49 @@ AWS Certified Solutions Architect  Associate -  Notes
 * Inventory and Configuration
 * Monitoring and Logging
 * Penetration Testing
+
+## Route 53
+* Named after TCP 53 / UDP 53 ports
+* World wide distributed DNS
+* Database of name to ip mappings
+* Route 53 has a 100% SLA (Service-level agreement)
+* Route 53 API
+* Server Health check
+* Public Hosted Zone
+* Public Hosted Zone for Amazon VPC (naem resolution for EC2 instances)
+* You can extend on-premises DNS to Amazon VPC
+
+| Type  |           Description       | Function  |                
+| ------|:---------------------------:|:------|     
+| A     | Address Record              | Returns a 32-bit IPv4 address, most commonly used to map hostnames to an IP address of the host, but it is also used for DNSBLs, storing subnet masks in RFC 1101, etc. 
+| CNAME | Canonical Name record | Alias of one name to another: the DNS lookup will continue by retrying the lookup with the new name.
+| MX    | Mail exchange record | Maps a domain name to a list of message transfer agents for that domain
+| AAAA  | IPv6 address record | Returns a 128-bit IPv6 address, most commonly used to map hostnames to an IP address of the host.
+| PTR   | Pointer record | Pointer to a canonical name. Unlike a CNAME, DNS processing stops and just the name is returned. The most common use is for implementing reverse DNS lookups, but other uses include such things as DNS-SD. 
+| SRV   | Service locator | Generalized service location record, used for newer protocols instead of creating protocol-specific records such as MX.
+| SPF   |  | 
+| NS    | Name server record | Delegates a DNS zone to use the given authoritative name servers
+| SOA   | Start of [a zone of] authority record | Specifies authoritative information about a DNS zone, including the primary name server, the email of the domain administrator, the domain serial number, and several timers relating to refreshing the zone.
+### Routing Policies
+* Single (simple)
+    * You can associate an A record with one or more IP addresses
+    * Single simply does round robin routing policies among several IP addresses
+    * Single does not support any health checks
+* Weighted
+    * Very similar to single but you can specify a weight per IP address 
+    * Weight represents a numerical value that favors one IP address over another
+* Latency
+    * AWS will maintain a database of latencies from different parts of the world
+    * Based on the table that AWS maintains, the user is routed to the lowest latency server
+* Failover
+    * Failover allows you to failover to a secondary IP address
+    * Failover is associated with health checks
+* Geolocation
+    * Caters to differents users in different countries and different languages
+    * Contains users within a particular geography and offers them a customized version of the workload that caters to their specific needs
+### Route 53 Warnings
+* You cannot extend Route 53 to on-premises instances
+* Cannot automatically register EC2 instances with private hosted zones
 
 ## IAM
 * AWS Identity and Access Management (IAM) is a web service that helps you securely control access to AWS resources. You use IAM to control who is authenticated (signed in) and authorized (has permissions) to use resources.
