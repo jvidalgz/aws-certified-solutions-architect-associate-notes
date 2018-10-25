@@ -70,6 +70,13 @@ AWS Certified Solutions Architect  Associate -  Notes
     - [Storing Logs](#storing-logs)
     - [Monitoring](#monitoring)
     - [Limits](#cloudwatch-limits)
+- [Trusted Advisor](#trusted-advisor)
+- [Kinesis Streams](#kinesis-streams)
+    - [Streams Terminology](#streams-terminology)
+        - [Producers](#producers)
+        - [Shards](#shards)
+    - [Warnings](#kinesis-warnings)
+    - [Limits](#kinesis-limits)
 - [IAM](#iam)
     - [Features](#features)
     - [Accesing IAM](#accesing-iam)   
@@ -601,6 +608,42 @@ AWS Certified Solutions Architect  Associate -  Notes
 * CloudWatch logs subscription can be used across multiple AWS accounts (requires cross account access)
 ### CloudWatch Limits
 * Alarm history is stored for 14 days 
+
+## Trusted Advisor
+* A service that helps you reduce cost, increase performance, and improve security by optimizing your AWS environment.
+* Provides real time guidance to help you provision resources following AWS best practices
+* Automated AWS account audits
+    * Cost 
+    * Performance
+    * Security
+    * Fault Tolerance
+    * Paid version expands number of areas audited
+
+## Kinesis Streams
+* Enables you to build custom applications that process or analyze streaming data for specialized needs.
+* It can continuously capture and store TB of data per hour from thounsand of sources such as websites, clickstreams, fincial transactions, social media feeds, IT logs and location-tracking events
+### Streams Terminology
+#### Producers
+* EC2 instances
+* Client
+* Mobile Clients
+* Traditional Servers
+* Can initiate stream to:
+    * Amazon Kinesis
+    * Streams API
+    * Amazon Kinesis Produce Library (KPL, store for example on GitHub)
+    * Amazon Kinesis Agent (install on Mobile Client)
+#### Shards
+* A uniquely identified group of data records in a stream
+* A stream is composed of one or more shards, each of which provides a fixed unit capacity
+### Kinesis Warnings
+* By default data is stored for 24 hours, but can be increased up to 7 days
+### Kinesis Limits
+* Can support up to 5 transactions per second for reads
+* Max total data read rate of 2 MB/s
+* Up to 1000 records per seconds of writes
+* Max total data write rate of 1 MB/s (including partition keys)
+
 ## IAM
 * AWS Identity and Access Management (IAM) is a web service that helps you securely control access to AWS resources. You use IAM to control who is authenticated (signed in) and authorized (has permissions) to use resources.
 ### Features
