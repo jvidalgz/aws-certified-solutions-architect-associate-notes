@@ -75,6 +75,10 @@ AWS Certified Solutions Architect  Associate -  Notes
     - [Streams Terminology](#streams-terminology)
         - [Producers](#producers)
         - [Shards](#shards)
+        - [Partition Keys](#partition-keys)
+        - [Sequence Number](#sequence-number)
+        - [Data Blobs](#data-blobs)
+        - [Consumers](#consumers)
     - [Warnings](#kinesis-warnings)
     - [Limits](#kinesis-limits)
 - [IAM](#iam)
@@ -636,6 +640,18 @@ AWS Certified Solutions Architect  Associate -  Notes
 #### Shards
 * A uniquely identified group of data records in a stream
 * A stream is composed of one or more shards, each of which provides a fixed unit capacity
+#### Partition Keys
+* Used to group data by shard within a stream
+* Stream service segregates data records belonging to a stream into multiple shards
+* Use partition keys associated with each data record to determine which shard a given data record belong to
+* Specified by the applications putting the data into a stream
+#### Sequence Number
+* Each data record has a unique sequence number
+* Assinged by streams after you write to the stream with client.putRecords or client.putRecord
+#### Data Blobs
+* The data your producer adds to a stream. The maximun size of data blob (the data payload after base64-decoding) is 1 Megabyte (MB)
+#### Consumers
+* Consumers get records from Amazon Kinesis Streams and process then these consumers are known as Amazon Streams Applications 
 ### Kinesis Warnings
 * By default data is stored for 24 hours, but can be increased up to 7 days
 ### Kinesis Limits
