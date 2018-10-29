@@ -94,7 +94,7 @@ AWS Certified Solutions Architect  Associate -  Notes
     - [Elastic Beanstalk Management](#elastic-beanstalk-management)
     - [CloudFormation vs Elastic Beanstalk](#cloudformation-vs-elastic-beanstalk)
 - [AWS OpsWorks](#aws-opsworks)
-- [What is Chef?](#what-is-chef?)
+- [What is Chef?](#what-is-chef)
     - [OpsWorks Components](#opsworks-components)
 - [IAM](#iam)
     - [Features](#features)
