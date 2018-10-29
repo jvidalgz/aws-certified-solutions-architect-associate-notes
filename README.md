@@ -81,6 +81,14 @@ AWS Certified Solutions Architect  Associate -  Notes
         - [Consumers](#consumers)
     - [Warnings](#kinesis-warnings)
     - [Limits](#kinesis-limits)
+- [AWS CloudFormation](#aws-cloudformation)
+    - [Templates and Stacks](#templates-and-stacks)
+    - [Templates](#templates)
+    - [Deploying Stacks](#deploying-stacks)
+    - [Template Elements](#template-elements)
+    - [Intrinsic Function](#intrinsic-function)
+    - [Need to Know](#need-to-know)
+    - [Stack Creation Errors](#stack-creation-errors)
 - [IAM](#iam)
     - [Features](#features)
     - [Accesing IAM](#accesing-iam)   
@@ -659,6 +667,48 @@ AWS Certified Solutions Architect  Associate -  Notes
 * Max total data read rate of 2 MB/s
 * Up to 1000 records per seconds of writes
 * Max total data write rate of 1 MB/s (including partition keys)
+
+## AWS CloudFormation
+* Gives developers and system administrators an easy way to create and manage a collection fo related AWS resources provisioning and updating them so in an orderly and predictable fashion
+### Templates and Stacks
+| Templates|Stacks|                
+| ------|---------------------------
+| Templates are architectural designs     | Stacks are deployed resources 
+| You can create, update and delete templates | You can create, update and delete stacks using templates
+| CloudFormation templates are written in JSON 
+### Templates
+* You don't need to figure out the order for provisioning AWS services
+* You don't need to worry about making dependencies to work 
+* Modify and update templates ina a controlled and predictable way
+    * In effect applying version control
+* Visualize with the AWS Cloudformation Designer
+### Deploying Stacks
+* AWS Management Console
+* Command Line Interface
+* APIs
+### Template Elements
+* File format and version (required)
+* List of resources and associated configuration values (required)
+* Template parameters (optional - up to 60)
+* Output values(optional - up to 60)
+* List of data tables
+### Intrinsic Function
+* Provides several built-in functions that help you manage your stacks 
+* Assing values to properties that are not available until runtime
+* Functions include: Fn::Base64, condition functions, Fn::FindInMap, Fn::GetAZs, Fn::Join, Fn::Select
+### Need to Know
+* Puppet and Chef integration
+* Bootstrap scripts
+* Define deletion policies
+* Provides wait condition
+* Create roles in IAM
+* VPCs can be created and customized
+* VPC peering in the same AWS account
+* Route 53 supported
+### Stack Creation Errors
+* Automatic rollback on error is enabled by default 
+* You will be chrged for resources provisioned even if there is an error
+* CloudFormation is free
 
 ## IAM
 * AWS Identity and Access Management (IAM) is a web service that helps you securely control access to AWS resources. You use IAM to control who is authenticated (signed in) and authorized (has permissions) to use resources.
