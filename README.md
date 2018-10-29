@@ -93,6 +93,9 @@ AWS Certified Solutions Architect  Associate -  Notes
     - [Elastic Beanstalk Overview](#elastic-beanstalk-overview)
     - [Elastic Beanstalk Management](#elastic-beanstalk-management)
     - [CloudFormation vs Elastic Beanstalk](#cloudformation-vs-elastic-beanstalk)
+- [AWS OpsWorks](#aws-opsworks)
+- [What is Chef?](#what-is-chef?)
+    - [OpsWorks Components](#opsworks-components)
 - [IAM](#iam)
     - [Features](#features)
     - [Accesing IAM](#accesing-iam)   
@@ -740,6 +743,22 @@ AWS Certified Solutions Architect  Associate -  Notes
 * Elastic Beanstalk does not provisions CloudFormation templates
 * Elastic Beanstalk is ideal for developers with limited cloud experience that nedd to deploy environments fast
 * Elastic Beanstalk is ideal if you have a standard PHP, Java, Python, Ruby, Node.js, .NET, Go, or Docker application that can run on an App server with database
+
+## AWS OpsWorks 
+* A configuration management service that helps you automate operational tasks like software configuration, package installations, database setups, server scaling, and code deployment using chef
+### What is Chef?
+* Automation platform that transform infraestructure into code
+* automates how applications are configured, deployed, and managed across your network
+* Chef server stores your recipes and configuration data
+* chef client (node) is installed on each server
+### OpsWorks Components
+* Use the AWS Management Console
+* Consists of two elements: Stack and Layers
+* Stacks are containers of resources (EC2, RDS, ELB) that you want to manage collectively
+* Every stack contains one or more layers:
+    * Web application layer
+    * Database layer
+* Layers automate the deployment of packages for you
 
 ## IAM
 * AWS Identity and Access Management (IAM) is a web service that helps you securely control access to AWS resources. You use IAM to control who is authenticated (signed in) and authorized (has permissions) to use resources.
