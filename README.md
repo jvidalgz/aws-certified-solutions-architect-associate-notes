@@ -89,6 +89,10 @@ AWS Certified Solutions Architect  Associate -  Notes
     - [Intrinsic Function](#intrinsic-function)
     - [Need to Know](#need-to-know)
     - [Stack Creation Errors](#stack-creation-errors)
+- [AWS Elastic Beanstalk](#aws-elastic-beanstalk)
+    - [Elastic Beanstalk Overview](#elastic-beanstalk-overview)
+    - [Elastic Beanstalk Management](#elastic-beanstalk-management)
+    - [CloudFormation vs Elastic Beanstalk](#cloudformation-vs-elastic-beanstalk)
 - [IAM](#iam)
     - [Features](#features)
     - [Accesing IAM](#accesing-iam)   
@@ -709,6 +713,33 @@ AWS Certified Solutions Architect  Associate -  Notes
 * Automatic rollback on error is enabled by default 
 * You will be chrged for resources provisioned even if there is an error
 * CloudFormation is free
+
+## AWS Elastic Beanstalk
+* A service for deploying and scaling web applications and services
+* Upload your code and Elastic Beanstalk automatically handles the deployment, from capacity provisioning, load balancing, auto-scaling to application health monitoring
+### Elastic Beanstalk Overview
+* Integrates with VPC
+* Integrates with IAM
+* Can provision RDS instances
+* Full control of resources
+* Code is stored in S3
+* Multiple environment are supported to enable versioning
+* changes from git repositories are replicated
+* Linux and Windows 2008 R2 AMI support
+* Deploy code using a WAR file or git repository
+* Use AWS toolkit for Visual Studio and AWS toolkit for Eclipse to deploy to Elastic Beanstalk
+* Elastic Beanstalk is fault tolerant within a single region (not fault tolerant between regions)
+* By default your applications are publicy accesible
+### Elastic Beanstalk Management
+* CloudWatch monitoring
+* Adjust application server settings
+* Run other application components
+* Access log files without logging into application servers
+### CloudFormation vs Elastic Beanstalk
+* cloudformation supports Elastic Beanstalk
+* Elastic Beanstalk does not provisions CloudFormation templates
+* Elastic Beanstalk is ideal for developers with limited cloud experience that nedd to deploy environments fast
+* Elastic Beanstalk is ideal if you have a standard PHP, Java, Python, Ruby, Node.js, .NET, Go, or Docker application that can run on an App server with database
 
 ## IAM
 * AWS Identity and Access Management (IAM) is a web service that helps you securely control access to AWS resources. You use IAM to control who is authenticated (signed in) and authorized (has permissions) to use resources.
