@@ -14,7 +14,10 @@ AWS Certified Solutions Architect  Associate -  Notes
     - [Spot Instance](#spot-instances)
     - [Dedicated Instances](#dedicated-instances)
     - [High Performance Computing (HPC)](#high-performance-computing-hpc)
+    - [Security Grups](#security-groups)
     - [Placement Groups](#placement-groups)
+    - [EC2 Exam Tips](#ec2-exam-tips)
+    - [Volume vs Snapshot Exam Tips](#volume-vs-snapshot-exam-tips)
     - [Warnings](#ec2-warnings)
     - [Limits](#ec2-limits)
 - [Load Balancer](#load-balancer)
@@ -23,19 +26,39 @@ AWS Certified Solutions Architect  Associate -  Notes
     - [Warnings](#lb-warnings)
 - [Auto Scaling](#auto-scaling)
 - [Elastic Block Storage (EBS)](#elastic-block-storage-ebs)
+    - [General Purpose SSD (GP2)](#general-purpose-ssd-gp2)
+    - [Provisioned IOPS SSD (IO1)](#provisioned-iops-ssd-io1)
+    - [Throughput Optimized HDD (ST1)](#throughput-optimized-hdd-st1)
+    - [Cold HDD (SC1)](#cold-hdd-sc1)
+    - [Magnetic (Standard)](#magnetic-standard) 
     - [Increasing IOPS Performance](#increasing-iops-performance)
     - [EBS-optimized instances](#ebs-optimized-instances)
     - [EBS Snapshots Characteristics](#ebs-snapshots-characteristics)
     - [EBS Snapshots Features](#ebs-snapshots-features)
+    - [EBS Exam Tips](#ebs-exam-tips)
+    - [EBS vs Instance Store](#ebs-vs-instance-store)
+    - [EBS vs Instance Store Exam Tips](#ebs-vs-instance-store-exam-tips)
     - [EBS Warnings](#ebs-warnings)
 - [Elastic File System](#elastic-file-system-(efs))
     - [Limits](#efs-limits)
+- [Lambda](#lambda)
+    - [What is Lambda?](#what-is-lambda)
+    - [Why is Lambda cool?](#why-is-lambda-cool)
+    - [How is Lambda priced?](#how-is-lambda-priced)
+    - [Lambda Exam Tips](#lambda-exam-tips)
+    - [Lambda Limits](#lambda-limits)
 - [Simple Storage Service S3](#simple-storage-service-s3)
     - [S3 Features](#s3-features)
+    - [S3 Versioning](#s3-versioning)
+    - [S3 Lifecycle Management](#s3-lifecycle-management)
     - [Securing S3](#securing-s3)
+    - [S3 Encryption](#s3-encryption)
+    - [S3 Exam Tips](#exam-tips-for-s3)
 - [Glacier](#glacier)
 - [Storage Gateway](#storage-gateway)
+    - [Storage Gateway Exam Tips](#storage-gateway-exam-tips)
 - [CloudFront](#cloudfront)
+    - [CloudFront Exam Tips](#cloudfront-exam-tips)
     - [Limits](#cloudfront-limits)
 - [Relational Database Service (RDS)](#relational-database-service-rds)
      - [RDS Automated Backups](#rds-automated-backups)
@@ -63,12 +86,15 @@ AWS Certified Solutions Architect  Associate -  Notes
         - [Security Methods and connectivity](#security-methods-and-connectivity)
 - [Route 53](#route-53)
     - [Routing Policies](#routing-policies)
+    - [Route 53 Exam Tips](#route-53-exam-tips)
     - [Warnings](#route-53-warnings)
 - [CloudTrail](#cloudtrail)
 - [CloudWatch](#cloudwatch)
+    - [What can I do with CloudWatch?](#what-can-i-do-with-cloudwatch)
     - [CloudWatch Logs](#cloudwatch-logs)
     - [Storing Logs](#storing-logs)
     - [Monitoring](#monitoring)
+    - [CloudWatch Exam Tips](#cloudwatch-exam-tips)
     - [Limits](#cloudwatch-limits)
 - [Trusted Advisor](#trusted-advisor)
 - [Kinesis Streams](#kinesis-streams)
@@ -205,20 +231,73 @@ AWS Certified Solutions Architect  Associate -  Notes
 * Jumbo frames are typically required: Transport large amount of data quicker than over a traditional  network (a lot of I/O - NFS is suitable in this case)
     * Jumbo frame: up to 9000 bytes of data (vs standard frame only 1500 bytes)
 * Supported on AWS through enhanced networking (single rout I/O virtualization (SR-IOV))
+### Security Groups
+* All inbound traffic is blocked by default 
+* All Outbound traffic is allowed
+* Changes to security gruos take effect immediately
+* You can have any number of EC2 instances within a security group
+* You cand have multiple security groups attached to EC2 instances
+* Security groups are STATEFUL
+    * If you create an inbound rule allowing traffic in, that traffic is automatically allow back out again
+* You cannot block specific IP addresses using security groups, instead use Network Access Control Lists
+* You can specify allo rules, but not deny rules.
 ### Placement Groups 
 * A logical grouping of instances in a single availability zone
 * Keep them as close as possible to each other in order to allow for low latency and high performance between these instances
 * Can span peered VPCs (but not at full performance)
+
+### EC2 Exam Tips
+* Know the differences between:
+    * On demand
+    * Spot
+    * Reserved
+    * Dedicated hosts
+* Remember with spot instances:
+    * If you terminate the instance, you pay for the hour
+    * If AWS terminates the spot instance, you get the hour it was terminated in for free
+
+### Volume vs Snapshot Exam Tips
+* Volumes exist on EBS:
+    * Virtual Hard Disk
+* Snapshots exist on S3
+* Snapshots are point in time copies of Volumes
+* Snapshots are incremental - this means that only the blocks that have changed since your last snapshot are moved to S3
+* Snapshots of Root Device Volumes:
+    * To create a snapshot for Amazon EBS volume that serve as root devices, you should stop the instance before taking the snapshot
+    *  However you can take a snap while the instance is running
+    * You can create AMI's from both Volumes and snapshots
+    * You can change EBS volume sizes on the fly, including changing the size and storage type
+    * Volumes will ALWAYS be in the same availability zone as the EC2 instance
+    * To move an EC2 volume from one AZ/Region to another, take a snap or an image of it, then copy it to the new AZ/Region
+* Security:
+    * Snapshots of encrypted volumes are encrypted automatically
+    * Volumes restored from encrypted snapshots are encrypted automatically
+    * You can share snapshots, but only if they are unencrypted
+        * These snapshots can be shared with other AWS accounts or made public
+
 ### EC2 Warnings
 * Placement Groups: 
     * Can't span multiple availability zones
     * Reserved instances are supported on an instance level but you cannot explicity reserved CAPACITY for a placement group
     * You can't merge them 
-### EC2 Limits
+    * The name must be unique (like S3 unique name convention) 
 * The name must be unique (like S3 unique name convention) 
+    * The name must be unique (like S3 unique name convention) 
+    * Cannot be merged 
 * Cannot be merged  
+    * Cannot be merged 
+    * Only certain types of intances can be launched in a placement group (Co,puted Optimized, GPU, Memory Optimized, Storage Optimized)
+    * AWS recommend homogenous instances within placement groups
+    * You can't move an existing instance into a placement group. You can create an AMi from your existing instance, and then launch a new instance from the AMI into a placement group
+### EC2 Limits
 
 ## Load Balancer
+* Instances monitored by ELB are reported as:
+    * InService
+    * OutofService
+* Health Checks check the instance health by talking to it
+* Have their own DNS name. You are never given an IP address.
+* Read the ELB FAQ for Classic Load Balancers
 ### Classic Load Balancer (CLB)
 * Region wide load balancer (not an VM / Appliance)
 * Can be used internally or externally
@@ -286,6 +365,25 @@ AWS Certified Solutions Architect  Associate -  Notes
 * EBS volume data is replicated across multiple servers in an Availability Zone
 * Encryption of EBS data volumes, boot volumes and snapshots
 * Designed for an annual failure rate (AFR) of between 0.1% - 0.2% a SLA 99.95%
+### General Purpose SSD (GP2)
+* General purpose, balances both price and performance
+* 3 IOPS/GB (minimum 100 IOPS) to a maximum of 10,000 IOPS
+* GP2 volumes smaller than 1 TB can also burst up to 3,000 IOPS
+### Provisioned IOPS SSD (IO1)
+* Designed for I/O intensive applications such a large relational or NoSQL databases
+* Use if you need more than 10000 IOPS
+* Can provision up to 20000 IOPS per volume
+### Throughput Optimized HDD (ST1)
+* Big data
+* Data warehouses
+* Log processing
+* Cannot be a boot volume
+### Cold HDD (SC1)
+* Lowest Cost Storage for infrequently accessed workloads
+* File server
+* Cannot be a boot volume
+### Magnetic (Standard)
+* Lowest cost per gigabyte of all EBS volume types that is bootable. Magnetic volumes are ideal for workloads where data is accessed infrequently, and applications where the lowest storage cost is important
 ### Increasing IOPS Performance
 * Multiple stripped gp2 or standard volumes (typically RAID 0)
 * Multiple stripped PIOPS volumes (typically RAID 0)
@@ -307,6 +405,24 @@ AWS Certified Solutions Architect  Associate -  Notes
 * Resizing EBS volumes
 * Sharing EBS snapshots 
 * Coping  EBS snapshots across regions
+### EBS Exam Tips
+* EBS Consists of:
+    * SSD, General Purpose - GP2 - (Up to 10000 IOPS)
+    * SSD, Provisioned IOPS - IO1 - (More than 10000 IOPS)
+    * HDD, Throughput Optimized - ST1 - frequently accessed workloads
+    * HDD, Cold - SC1 - less frequently accessed data
+    * HDD, Magnetic - Standard - cheap, infrequently accessed storage
+### EBS vs Instance Store
+* All AMIs are categorized as either backed by Amazon EBS or backed by instance store.
+* For EBS Volumes: The root device for an instance launched from the AMI is an Amazon EBS volume created from an Amazon EBS snapshot
+* For Instance Store Volumes: The root device for an instance launched from the AMI is an instance store volume created from a template stored in Amazon S3
+### EBS vs Instance Store Exam Tips
+* Instance Store Volumes are sometimes called Ephemeral Storage
+* Instance Store Volumes cannot be stopped. If the underlying host fails, you will lose your data
+* EBS backed instances can be stopped. You will not lose tha data on this instance if it stopped
+* You can reboot both, you will no lose your data
+* By default, both ROOT volumes will be deleted on termination, however with EBS volumes, you can tell AWS to keep the root device volume
+
 ### EBS Warnings
 * Cannot be attached to more than one instance at the same time
 * Privisioned IOPS: maximun ratio of 50:1 between IOPS and volume size
@@ -318,10 +434,43 @@ AWS Certified Solutions Architect  Associate -  Notes
 * Big Data and analytics, media processing, workflows, content management, web, home directories
 * Supports NFS 4.1
 * ON premises access enabled via Direct Connect
+* You only pay for the storage you use (no pre-provisioning required)
+* Can scale up to the petabytes
+* Can support thousands of concurrent NFS connections
+* Data is stored across multiple AZ's within a region
+* Read After Write Consistency
 
 ### EFS Limits 
 * 1 to 1000 of EC2 instances, from multiple AZs, concunrrently
 * By default, you can create up to 10 file systems per AWS account per region
+
+
+## Lambda
+### What is Lambda?
+* AWS Lambda is a compute service where you can upload your code and create a Lambda function. AWS Lambda takes care of provisioning and managing the servers that you use to run the code. You don't have to worry about operating systems, patching, scaling, etc. You can use Lambda in the following ways:
+    * As an event-driven compute service where AWS Lambda runs your code in response to events. These events could be changes to data in an Amazon S3 bucket or an Amazon DynamoDB table
+    * As a compute service to run your code in response to HTTP requests using Amazon API Gateway or API calls made using AWS SDKs.
+### Why is Lambda cool?
+* No servers
+* Continuous scaling
+* Super cheap
+### How is Lambda priced?
+* Numbers of requests
+    * First 1 million requests are free $0.20 per 1 million requests thereafter
+
+* Duration
+    * Duration si calculated from the time your code begins executing until it returns or otherwise terminates, rounded up to the nearest 100ms. The price depends on the amount fo memory you allocate to your function. You are charged $0.00001667 for every GB-second used
+### Lambda Exam Tips
+* Lambda scales out (not up) automatically
+* Lambda functiosn are independent, 1 event = 1 function
+* Lambda is serverless
+* Know what services are serverless
+* Lambda functions can trigger other lambda functions 1 event can = x functions if functions trigger other functions
+* Architectures can get extremely complicated, AWS X-ray allows you to debug what is happening
+* Lambda can do things globally, you can use it to back up S3 buckets to other buckets
+* Know your triggers
+### Lambda Limits
+* Max function time: 5 minutes
 
 ## Simple Storage Service S3
 ### S3 Features
@@ -331,10 +480,68 @@ AWS Certified Solutions Architect  Associate -  Notes
 * MFA Delete
 * Permissions management
 * Time-limited access to objects
+### S3 Versioning
+* Stores all version of an object (including all writes and even if you delete and object)
+* Great backup tool 
+* Once enabled, Versioning cannot be disabled, only suspended.
+* Integrates with Lifecycle rules
+* Versioning's MFA Delete capability, which uses multi-factor authentication, can be used to provide an additional layer of security
+* Cross Region Replication, required versioning enabled on the source and destination bucket
+### S3 Lifecycle Management
+* Can be used in conjuntion with versioning
+* Can be applied to current versions and previous versions
+* Following actions can now be done:
+    * Transition to the Standard - Infrequent Access Storage Class (128KB and 30 days after the creation date)
+    * Archive to the Glacier Storage Class (30 days after IA, if relevant)
+
+* 
 ### Securing S3
 * Bucket policies
 * MFA Delete
 * Backing up your Bucket to another Bucket in a different account
+* By default, all newly created buckets are PRIVATE
+* You can setup access control to your buckets using:
+    * Bucket Policies
+    * Access Control Lists
+* S3 buckets can be configured to create access logs which log all request made to the S3 bucket. This can be done to another bucket
+### S3 Encryption
+* In transit:
+    * SSL/TLS
+* At Rest
+    * Server Side Encryption
+        * S3 Managed Keys - SSE-S3
+        * AWS Key Management Service, Managed Keys - SSE-KMS
+        * Server side Encryption With Customer Provided Keys - SSE-C
+    * Client Side Encryption
+
+### S3 Exam Tips
+* Remember that S3 is Object base i.e. allows yo to upload files.
+* Files can be from 0 bytes to 5TB
+* There is unlimited storage
+* Files are stored in Buckets
+* S3 is a universal namespace, that is, names must be unique globally
+* Read after Write consistency for PUTS of new objects
+* Eventual Consistency for overwrite PUTS and DELETES (can take some time to propagate)
+* S3 Storage Classes/Tiers
+    * S3(durable, inmediately available, frequently accessed)
+    * S3 - IA(durable, immediately available, infrequently accessed)
+    * S3 - Reduced Redundancy Storage (data that is easily reproducible, such as thumbnails etc)
+    * Glacier - Archived data, where you can wait 3 -5 hours before accessing
+* Remember the core fundamentals of S3:
+    * Key (name)
+    * Value (data)
+    * Version ID
+    * Metadata
+    * Access control lists
+* S3 Transfer Acceleration
+    * You can spped up transfers to S3 using S3 transfer acceleration. This costs extra, and has the greatest impact on people who are in far away location.
+* S3 Static Websites
+    * You can use S3 to host static websites
+    * Serverless
+    * Very cheap, scales automatically
+    * STATIC only, cannot host dynamic sites
+* Write to S3 - HTTP 200 code for a successful write
+* You can load files to S3 much faster by enabling multipart upload
 
 ## Glacier
 * Integrates with Amazon S3 lifecycle policies
@@ -342,6 +549,13 @@ AWS Certified Solutions Architect  Associate -  Notes
 * Gateway-cached volumes
 * Gateway-stored volumes
 * Gateway-virtual Tape Library (VTL)
+### Storage Gateway Exam Tips
+* File Gateway - For flat files, stored directly on S3
+* Volume Gateway
+    * Stored Volumes - Entire Dataset is stored on site and is asynchronously backed up to S3
+    * Cached Volumes - Entire Dataset is stored on S3 and the most frequently accesed data is cached on site
+* Gateway virtual Tape Library (VTL)
+    * Used for backup and uses popular backup applications like NetBackup, Backup Exec, Veeam, etc.
 ## CloudFront
 * A global CDN service. It integrates with other AWS products to give developers and business an easy way to distribute content to end users with low latency, high data transfer speeds and no minimum usage commitments
 * Used to deliver and entire website using a global netwotk of edge locations:
@@ -355,7 +569,16 @@ AWS Certified Solutions Architect  Associate -  Notes
     * EC2
     * Elastic Load Balancing
     * Route 53
-    
+### CloudFront Exam Tips
+* Edge Location: This is the location where content will be cached. This is separate to an AWS Region/AZ
+* Origin: This is the origin of all the files that the CDN will distribute. This can be either an S3 Bucket, an EC2 Instance, an Elastic Load Balancer or Route53
+* Distribution: This is the name given the CDN which consists of a collection of Edge Locations
+    * Web Distribution: Typically used for Websites
+    * RTMP: Used for Media Streaming
+* Edge locations are not just READ only, you cand write them too (Put and object on to them)
+* Objects are cached for the life of the TTL (Time To Live)
+* You can clear cached objects, but you will be charged
+
 ### CloudFront Limits 
 * Up to 1000  vaults per region
 * Individual archives can be from 1 byte to 40 terabytes
@@ -573,6 +796,42 @@ AWS Certified Solutions Architect  Associate -  Notes
 * Geolocation
     * Caters to differents users in different countries and different languages
     * Contains users within a particular geography and offers them a customized version of the workload that caters to their specific needs
+### Route 53 Exam Tips 
+* ELB's do not have pre-defined IPv4 addresses, you resolve to them using a DNS name
+* Understand the difference between an Alias Record and a CNAME:    
+    Differences between the A, CNAME, ALIAS and URL records
+    A, CNAME, ALIAS and URL records are all possible solutions to point a host name (name hereafter) to your site. However, they have some small differences that affect how the client will reach your site.
+
+    Before going further into the details, it’s important to know that A and CNAME records are standard DNS records, whilst ALIAS and URL records are custom DNS records provided by DNSimple’s DNS hosting. Both of them are translated internally into A records to ensure compatibility with the DNS protocol.
+
+    Understanding the differences
+    Here’s the main differences:
+
+    The A record maps a name to one or more IP addresses, when the IP are known and stable.
+    The CNAME record maps a name to another name. It should only be used when there are no other records on that name.
+    The ALIAS record maps a name to another name, but in turns it can coexist with other records on that name.
+    The URL record redirects the name to the target name using the HTTP 301 status code.
+    Some important rules to keep in mind:
+
+    The A, CNAME, ALIAS records causes a name to resolve to an IP. Vice-versa, the URL record redirects the name to a destination. The URL record is simple and effective way to apply a redirect for a name to another name, for example to redirect www.example.com to example.com.
+    The A name must resolve to an IP, the CNAME and ALIAS record must point to a name.
+    Which one to use
+    Understanding the difference between the A name and the CNAME records will help you to decide.
+
+    The general rule is:
+
+    use an A record if you manage what IP addresses are assigned to a particular machine or if the IP are fixed (this is the most common case)
+    use a CNAME record if you want to alias a name to another name, and you don’t need other records (such as MX records for emails) for the same name
+    use an ALIAS record if you are trying to alias the root domain (apex zone) or if you need other records for the same name
+    use the URL record if you want the name to redirect (change address) instead of resolving to a destination.
+    You should never use a CNAME record for your root domain name (i.e. example.com).
+* Given the choice, always choose an Alias Record over a CNAME
+* Remember the different routing policies and their use cases
+    * Simple
+    * Weighted
+    * Latency
+    * Failover
+    * Geolocation
 ### Route 53 Warnings
 * You cannot extend Route 53 to on-premises instances
 * Cannot automatically register EC2 instances with private hosted zones
@@ -607,7 +866,13 @@ AWS Certified Solutions Architect  Associate -  Notes
     * Any log files your applications generate
 * Gain system-wide visibility into resource utilization
 * Application performance
-* Operational Health 
+* Operational Health
+### What can I do with CloudWatch?
+* Dashboards - Creates awesome dashboards to see what is happening with your AWS environment
+* Alarms - allows you to set Alarms that notufy you when particular thresholds are hit
+* Events - CloudWatch Events helps you to respond to state changes in your AWS resources
+* Logs - CloudWAtch logs helps you to aggregate, monitor and store logs 
+
 ### CloudWatch Logs
 * By default, CloudWatch logs will store your log data indefinitely
 * CloudTrail logs can be sent to CloudWatch logs for real-time monitoring
@@ -625,6 +890,9 @@ AWS Certified Solutions Architect  Associate -  Notes
 * Best practice is to store logs in CloudWatch logs or S3
 * CloudTrail can be used across multiple AWS accounts while being pointed to a single S3 bucket (requires cross account access)
 * CloudWatch logs subscription can be used across multiple AWS accounts (requires cross account access)
+### CloudWatch Exam Tips
+* Standard Monitoring = 5 minutes
+* Detailed Monitoring = 1 minute
 ### CloudWatch Limits
 * Alarm history is stored for 14 days 
 
