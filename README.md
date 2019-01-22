@@ -68,21 +68,36 @@ AWS Certified Solutions Architect  Associate -  Notes
     - [Limits](#cloudfront-limits)
 - [Relational Database Service (RDS)](#relational-database-service-rds)
      - [RDS Automated Backups](#rds-automated-backups)
+     - [RDS Snapshots](#rds-snapshots)
      - [RDS Restore](#rds-restore)
+     - [RDS Encryption](#rds-encryption)
      - [RDS Warnings](#rds-warnings)
      - [RDS Limits](#rds-limits)
+     - [What is Multi-AZ RDS?](#what-is-multi-az-rds)
      - [Multi-AZ Failover](#multi-az-failover)
+     - [What is Read Replica?](#what-is-read-replica)
 - [DynamoDB](#dynamodb)
+    - [DynamoDB Pricing](#dynamodb-pricing)
+    - [DynamoDB Pricing Example](#dynamodb-pricing-example)
     - [Non-Ideal DynamoDB Scenarios](#non-ideal-dynamodb-scenarios)
     - [DynamoDB Integration](#dynamodb-integration)
     - [DynamoDB features](#dynamodb-features)
     - [Two ways to search](#two-ways-to-search)
-- [ElasticCache](#elasticcache)
+- [ElastiCache](#elasticache)
+    - [ElastiCache Exam Tips](#elasticache-exam-tips)
 - [RedShift](#amazon-redshift)
     - [Architecture](#amazon-redshift-architecture)
+        - [Redshift 10 times faster](#redshift-10-times-faster)
+        - [Redshift Pricing](#redshift-pricing)
+        - [Redshift Security](#redshift-security)
+        - [Redshift Availability](#redshift-availability)
         - [Leader Node](#leader-node)
         - [Computes Nodes](#computes-nodes)
     - [Backups and Fault Tolerance](#backups-and-fault-tolerance)
+- [Aurora]
+    -[What is Aurora?](#what-is-aurora)
+    -[Aurora Autoscaling](#aurora-autoscaling)
+    -[Aurora Replicas](#aurora-replicas)
 - [Understanding AWS Security](#understanding-aws-security)
     - [Physical Access](#physical-access)
     - [Security Certifications and AWS Compliance](#security-certifications-and-aws-compliance)
@@ -663,26 +678,45 @@ AWS Certified Solutions Architect  Associate -  Notes
     * Bring your own license
 * Automated or manual backups
 ## RDS Automated Backups
+* There are two different types ob Backups for AWS. Automated Backups and Database Snapshots.
+* Automated Backups allow you to recover your database to any point in time within a "retention period". Retention period can be between one and 35 days. Automated Backups will take a full daily snapshot and will also store transaction logs throughout the day. When you do a recovery, AWS will first choose the most recent daily back up , and then apply transaction logs relevant to that day. This allow you to do a point in time recovery down to a second, within the retention period.
+* Automated Backups are enabled by default. The backup data is stored in S3 and you get free storage space equal to the size of your database. So if you have an RDS instance of 10Gb you will get 10Gb wrth of storage
+* Backups are atken within a defined window. During the backup window, storage I/O may be suspended while your data is being backed up and you may experience elevated latency.
 * Continuosly tracks changes and backups your database
 * Volume snapshot of your entire DB instance, not just DB
 * On day of backups retained by default but cand be configured up to 35 days
 * Backup retention period defined during configuration
 * When you delete an RDS instance, all automated snapshots are deleted. Manual snapshots are preserved
-* Automated backups ocurr daily during a 30 minute configurable backup window
+* Automated backups occurs daily during a 30 minute configurable backup window
 * Automated backups are preserved for a configurable number of days (retention period)
+## RDS Snapshots
+* DB Snapshots are done manually (ie the are user initiated). They are stored even after you delete the original RDS instance, unlike automated backups
 ## RDS Restore
 * RDS combines daily backups in conjuntion with transaction logs to restore the DB instance to any point during the retention period
+## RDS Encryption
+* Encryption at rest is supported for MySQL, Oracle, SQL Server, PostgreSQL & MariaDB. Encryption is done using the AWS Key Management Service (KMS) service. Once your RDS instance is encrypted the data stored at rest in the underlying storage is encrypted, as are its automated backups, read replicas, and snapshots.
+* At the present time, encrypting an existing DB instance is not supported. To use Amazon RDS encryption for an existing database, create a new DB Instance with encryption enabled and migrate your data into it.
 ## RDS Warnings
 * You cannot restore from a DB snapshot to an existing DB instance
 * Only default DB parameters and security groups are restored
+* Read Replica:
+    * Used for scaling! Not for DR!
+    * Must 
 ## RDS Limits
 * Up to the last five minutes, RDS uploads transaction logs for DB instances to Amazon S3 every 5 minutes. 
+## What is Multi-AZ RDS?
+* Multi-AZ allows you to have an exact copy of your production database in another AvailaBility Zone. AWS handles the replication for you, so when your production database is written to, this write will automatically be synchronised to the stand by database
+* In the event od planned database maintenance, DB Instance failure, or an Availability Zone failure, Amazon RDS will automatically failover to the standby so the database operations can resume quickly without administrative intervention
+* Multi-AZ is for Disaster Recovery only. It is not primary used for improving performance. For performance improvement you need Read Replicas
 ## Multi-AZ Failover
 * Multi-AZ RDS deployment designed for HA
 * Synchronous replication in a secondary AZ
 * DB snapshots always taken against standby instance
 * AWS automatically adjusts DNS records when needed
 * Multi-AZ is different from a RDS read replica
+## What is Read Replica?
+* Read replica's allow you to have a read only copy of your production database. THis is achived by using Asynchronous replication from the primary RDS instance to the read replica. You use read replica's primarily for very read-heavy databse workloads.
+* Supported Databases: MySQL Server, PostgreSQL, MariaDB
 
 # Amazon DynamoDB
 * DynamoDB is a fully managed, highly available and scalable NoSQL database
@@ -693,6 +727,24 @@ AWS Certified Solutions Architect  Associate -  Notes
 * Ideal for existing or new applications that need:
     * A flexible NoSQL database with low read and write latencies
     * The ability o scale storage and throughput up or down as needed without code changes or downtime
+* Amazon DynamoDB is a fast and flexible NoSQL database service for all applications that need consistentm single-digit millisecond latency at any scale. It is a fully managed database and supports both document and key-value data models. Its flexible data model and reliable performance make it a great fit for mobile, web, gaming, ad-tech, IoT and many other applications. 
+* Stored on SSD storage
+* Spread across 3 geographically distinct data centers
+* Eventual Consistent Reads (Default)
+    * Consistency across all copies of data is usually reached within a second. Repeating a read after a short time should return the updated data. (Best Read Performance)
+* Strongly Consistent Reads
+    * A strongly consistent read returns a result that reflects all writes that received a successful response prior to the read
+## DynamoDB Pricing
+* Provisioned Throughput Capacity
+    * Write Throughput $0.0065 per hour for every 10 units
+    * Read Throughput $0.0065 per hour for every 50 units
+* Storage costs of $0.25 per GB of data per month
+## DynamoDB Pricing Example
+* Let's assume that your application needs to perform 1 million writes and 1 million reads per day, while storing 3 GB of data. First, you need to calculate how many writes and reads per second you need. 1 million evenly spread writes per day is equivalent to 1.000.000 (writes) / 24 (hours) / 60 (minutes) / 60 (seconds) = 11.6 writes per second.
+* A DynamoDB Write Capacity Unit can handle 1 write per second, so you need 12 Write Capacity Units. Similary, to handle 1 million strongly consistent reads per day, you need 12 Read Capacity Units. With Read Capacity Units, you are billed in blocks of 50, with Write Capacity Units you are billed in blocks of 10.
+* To calculate Write Capacity Units = (0.0065/10) x 12 x 24 = $0.1872
+* To calculate Rrite Capacity Units = (0.0065/50) x 12 x 24 = $0.0374
+
 ## Non-Ideal DynamoDB Scenarios
 * Pre-written applications tied to a traditional relational database
 * Join and/or complex transactions
@@ -719,13 +771,15 @@ AWS Certified Solutions Architect  Associate -  Notes
 * Query operation: find items in a table or secondary index using only primary key attribute
 * Scan operation : find every item in a table or in a secondary index. By default it will return all data attributes for every item in a table or a index. Heavy, overhead, pull down performance
 
-# ElasticCache 
+# ElastiCache
+* ElastiCache is a web service that makes it easy to deploy, operate, and scale an in-memory cache in the cloud. The service improves the performance of web applications by allowing you to retrieve information from fast, managed, in-memory caches, instead of relying entirely on slower disk-based databases 
+* Amazon ElastiCache can be used to significantly improve latency and throughput for many read-heavy application workloads (such as social networking, gaming media sharing and Q&A portals) or computing intensive workloads (such as a recommendation engine)
+* Caching improves application performance by storing critical pieces of data in memory for low-latency access. Cached information may include the results of I/O-intensive database queries or the results of computationally-intensive calculations.
 * Open-source in-memory caching engines
     * Memcached:
-        * Widely adopted memory object caching system
+        * A widely adopted memory object caching system. ElastiCache is protocol compliant with Memcached, so popular tools that you use today with existing Memcached environments will work seamlessly with the service.
     * Redis:
-        * Popular open-source in-memory key-value store
-        * Supports data structures such as sorted sets and lists
+        * A Popular open-source in-memory key-value store that supports data structures such as sorted sets and lists. ElastiCache supports Master/Slave replication and Multi-AZ which can be used to achieve cross AZ redundancy
 * Master/Slave replication and Multi-AZ
     * Can be used to achieve cross AZ redundancy
 
@@ -740,6 +794,10 @@ AWS Certified Solutions Architect  Associate -  Notes
 | Sorting and ranking       | ✕          |✓       |
 | Advanced data types       | ✕          |✓       |
 | Persistence               | ✕          |✓       |
+## ElastiCache Exam Tips
+* Typically you will be given a scenario where a particular database is under a lot of stress/load. You may be asked which service you should use to alleviate this.
+* Elasticache is a good choice if your database is particularly read heavy and not prone to frequent changing
+* Redshift is a good answer if the reason your database is feeling stress is because management keep running OLAP transactions on it.
 
 # Amazon RedShift 
 * Fast and fully managed petabyte-scale relational data warehouse service.
@@ -747,7 +805,29 @@ AWS Certified Solutions Architect  Associate -  Notes
 * HDD and SSD platforms.
 * Starts at $0.25/hour
 * Scale to $1000/TB/year
+* Amazon Redshift is a fast and powerful, fully managed, petabyte-scale data warehouse service in the cloud. Customers can start small for just $0.25 per hour with no commitments or upfront costs and scale to a petabyte or more for $1,000 per terabyte per year, less than a tenth of most other data warehousing solutions
 ## Amazon RedShift Architecture
+* Single Node (160GB)
+* Multi-Node
+    * Leader Node (manages client connections and receives queries)
+    * Compute Node (store data and perform queries and computations). Up to 128 Compute Nodes
+## Redshift 10 times faster
+* Columnar Data Storage: Instead of storing data as series of rows, Amazon Redshift organizes the data by column. Unlike row-based systems, which are ideal for transaction processing, column-based system are ideal for data warehousing and analytics, where queries often involve aggregates performed over large data sets. Since only the columns involved in the queries are processed and columnar data is stored sequentially on the storage media, column-based systems require far fewer I/Os, greatly improving query performance
+* Advanced Compression: Columnar data stores can be compressed much more than row-based data stores because similar data is stored sequentially on disk. Amazon Redshift employs multiple compression relative to traditional relational data stores. In addition, Amazon Redshift dosen't require indexes or materialized views and so uses less space than traditional relational databases systems. When loading data into an empty table, Amazon Redshift automatically samples your data and selects the most appropiate compresion scheme
+ * Massively Parallel Processing (MPP): Amazon Redshift automatically distributes data and query load across all nodes. Amazon Redshift makes it easy to add nodes to your data warehouse and enables you to maintain fast query performance as your data warehouse grows.
+ ## Redshift Pricing
+ * Compute Node Hours (total number of hours you run across all your compute nodes for the billing period. You are billed for 1 unit per node per hourm, so a 3-node data warehouse cluster running persistently for an entire month would incur 2,160 instance hours. You will not be chrged for leader node hours; only compute nodes will incur charges)
+ * Backup
+ * Data transfer (only within a VPC, not outside it)
+ ## Redshift Security
+ * Encrypted in transit using SSL
+ * Encrypted at rest using AES-256 encryption
+ * By default Redshift takes care of key management
+    * Manage your own keys through HSM
+## Redshift Availability
+* Currently only available in one AZ
+* Can restore snapshots to new AZ's in the event of an outage
+
 ### Leader Node
 * Simple SQL end point
 * Stores metadata
@@ -774,6 +854,19 @@ AWS Certified Solutions Architect  Associate -  Notes
     * Encryption to secure data at rest
     * Audit logging and AWS CloudTrail integration
     * SOC 1/2/3, PCI-DSS, FedRamp, BAA
+# Aurora
+## What is Aurora?
+* Amazon Aurora is a MySQL-compatible, relational database engine that combines the speed and availability of high-end commercial databases with the simplicity and cost-effectiveness of open-source databases. Amazon Aurora provides up to five times better performance that MySQL at a proce point one tenth that of a commercial database while delivering similar performance and availability
+## Aurora Scaling
+* Start with 10GB, scales in 10GB increments to 64GB (Storage Autoscaling)
+* Compute resources can scale up to 32vCPUs and 244GB of memory
+* 2 copies of your data is containe in each availability zone, with minimun of 3 availability zones. 6 copies of your data
+* Aurora is designed to transparently handle the loss of up to two copies of data without affecting database write availability and up to three copies without affecting read availability
+* Aurora storage is also self-healing. Data block and disks are continuously scanned for errors and repaired automatically
+## Aurora Replicas
+* 2 types of Replicas are available
+* Aurora Replicas (up to 15)
+* MySQL Read Replicas (up to 5)
 
 # Understanding AWS Security
 ## Physical Access
