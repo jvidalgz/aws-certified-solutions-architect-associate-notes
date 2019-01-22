@@ -1,11 +1,17 @@
 AWS Certified Solutions Architect  Associate -  Notes
 =====================================
 - [VPC](#vpc)
+    - [What is a VPC?](#what-is-a-vpc)
+    - [VPC - AWS Definition](#vpc-aws-definition)
+    - [What can you do with a VPC?](#what-can-you-do-with-a-vpc)
+    - [Default VPC vs Custom VPC](#default-vpc-vs-custom-vpc)
     - [NAT Instances vs NAT Gateways](#nat-instances-vs-nat-gateways)
+    - [VPC Flow Logs](#vpc-flow-logs)
     - [VPC Peering](#vpc-peering)
     - [VPC Access types](#vpc-access-types)
         - [Direct Connect](#direct-connect)
         - [AWS VPN CloudHub](#aws-vpn-cloudhub)
+    - [VPC Exam Tips](#vpc-exam-tips)
     - [VPC Warnings](#vpc-warnings)
     - [VPC Limits](#vpc-limits)
 - [EC2](#ec2)
@@ -151,6 +157,23 @@ AWS Certified Solutions Architect  Associate -  Notes
     * Source and Protocol filtering
     * Subnet level trafic firewall
     * Stateless
+### What is a VPC?
+* Think of a VPC as a virtual data center in the cloud
+### VPC - AWS Definition
+* You can easily customize the network configuration for your Amazon Virtual Private Cloud. For example, you can create a public-facing subnet for your webservers that has access to the Internet, and place your backend systems such as databases or application servers in a private-facing subnet with no Internet access. You can leverage multiple layers of security, including security groups and network access control lists, to help control access to Amazon EC2 instances in each subnet.
+* Additionally, you can create a Hardware Virtual Private Network (VPN) connection betwwen your corporate datacenter and your VPC and leverage the AWS cloud as an extension of your corporate datacenter
+### What can you do with a VPC?
+* Launch instances into a subnet of your choosing
+* Assign custom IP address ranges in each subnet
+* Configure route tables between subnets
+* Create internet gateway and attach it to our VPC
+* Much better security control over your AWS resources
+* Instance security groups
+* Subnet network access control lists (ACLS)
+### Default VPC vs Custom VPC
+* Default VPS is user friendly, allowing you to inmmediately deploy instances
+* All subnets in default VPC have route out to the internet
+* Each EC2 instance has both a public and private IP address
 ### NAT Instances vs NAT Gateways
 | NAT Instances                                        | NAT Gateways                                                 |                
 | ---------------------------------------------------- |:------------------------------------------------------------:|     
@@ -161,7 +184,18 @@ AWS Certified Solutions Architect  Associate -  Notes
 | Manual port fordwarding                              | Port fordwarding NOT supported                               |
 | Use a bastion server                                 | Bastion server not supported                                 |
 | View CloudWatch alarms                               | Traffic metrics not supported                                |
+### VPC Flow Logs
+* VPC Flow Logs is a feature that enables you to capture information about the IP traffic going to and from network interfaces in your VPC. Flow log data is stored using Amazon CloudWatch Logs. After you've created a flow log, you can view and retrieve its data in Amazon CloudWatch Logs.
+* Flow logs can be created a t 3 levels:
+    * VPC
+    * Subnet 
+    * Network Interface Level
+
  ### VPC Peering
+ * Allows you to connect one VPC with another via a direct netowork route using private Ip address
+ * Instances behave as if they were on the same private network
+ * You can peer VPCs's with other AWS accounts as well as with other VPCs in the same account
+ * Peering is a star configuration: ie: 1 central VPC peers with 4 others. NO TRANSITIVE PEERING!
 * Single region Inter-VPC routing
 * Connection between same or different AWS account
 * DNS supported
@@ -179,6 +213,41 @@ AWS Certified Solutions Architect  Associate -  Notes
 * Can be partitioned into multiple Virtual Interfaces
 #### AWS VPN CloudHub
 * Direct connection to VPC for Branch offices 
+### VPC Exam Tips
+* Think of a VPC as a logical datacenter in AWS
+* Consists of IGWs (or Virtual Privae Gateways), Route Tables, Network Access Control Lists, Subnets and Security Groups
+* 1 Subnet = 1 Availability Zone
+* Security Groups are Stateful; Network Access Control Lists are Stateless
+* NO TRANSITIVE PEERING
+* NAT Instances:
+    * When creating a NAT instance, disable source/destination check on the instance
+    * NAT instances must be in a public subnet 
+    * There must be a route out of the private subnet to the NAT instance, in order for this to work
+    * The amount of traffic that NAT instances can support depends on the instance size. If you are bottlenecking, increase the instance size
+    * You can create high availability using Autoscaling Groups, multiple subnets in different AZs, and a script to automate failover
+    * Behind a Security Group
+* NAT Gateways:
+    * Preferred by the enterprise
+    * Scale automatically up to 10Gbps
+    * No need to patch
+    * Not associated with security groups
+    * Automatically assigned a public ip address
+    * Remember to update your route tables
+    * No need to disable Source/Destination Checks
+* Flow Logs
+    * You cannot enable flow logs for VPCs that are peered with your VPC unless the peer VPC is in your account
+    * You cannot tag a flow log
+    * After you've created a flow log, you cannot change its configuration; for example, you can't associate a different IAM role with the flow log
+    * Not all IP traffic is monitored:
+        * Traffic generated by instances when they contact the Amazon DNS server. If you use your own DNS server, then all traffic to that DNS server is logged
+        * Traffic generated by  Window instance for Amazon Windos licence activation
+        * Traffic to and from 169.254.169.254 for instance metadata
+        * DHCP traffic 
+        * Traffic to the reserved IP address for the default VPC router
+* NAT vs Bastions
+    * A NAT is used to provide internet traffic to EC2 instances in provate subnets
+    * A Bastion is used to securely administer EC2 instances (using SSH or RDP) in private subnets. They are like 'jump boxes'
+
 ### VPC Warnings
 * Subnets do not span over AZs
 * Update the inbound or outbound rules for your VPC Security Groups to reference Security Groups in the peered VPC
