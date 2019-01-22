@@ -94,7 +94,7 @@ AWS Certified Solutions Architect  Associate -  Notes
         - [Leader Node](#leader-node)
         - [Computes Nodes](#computes-nodes)
     - [Backups and Fault Tolerance](#backups-and-fault-tolerance)
-- [Aurora]
+- [Aurora](#aurora)
     - [What is Aurora?](#what-is-aurora)
     - [Aurora Autoscaling](#aurora-autoscaling)
     - [Aurora Replicas](#aurora-replicas)
