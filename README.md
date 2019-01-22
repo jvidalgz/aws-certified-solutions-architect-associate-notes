@@ -161,6 +161,35 @@ AWS Certified Solutions Architect  Associate -  Notes
     - [IAM Best Practices and Use Cases](#iam-best-practices-and-use-cases)
     - [Identities (Users, Groups, and Roles)](#identities-users,-groups,-and-roles)
     - [Warnings](#iam-warnings)
+- [Amazon SQS](#amazon-sqs)
+    - [What is Amazon SQS?](#what-is-amazon-sqs)
+    - [Queues Types](#queues-types)
+    - [SQS Key Facts](#sqs-key-facts)
+- [Amazon SWF](#amazon-swf)
+    - [What is SWF?](#what-is-swf)
+    - [SWF vs SQS](#swf-vs-sqs)
+    - [SWF Actors](#swf-actors)
+- [Amazon SNS](#amazon-sns)
+    - [What is SNS?](#what-is-sns)
+    - [SNS Benefits](#sns-benefits)
+    - [SNS vs SQS](#sns-vs-sqs)
+    - [SNS Pricing](#sns-pricing)
+- [Amazon Elastic Transcoder](#amazon-elastic-transcoder)
+    - [What is Elastic Transcoder](#what-is-elastic-transcoder)
+- [API Gateway](#api-gateway)
+    - [What is API Gateway?](#what-is-api-gateway)
+    - [What is API Caching?](#what-is-api-caching)
+    - [What can API Gateway do?](#what-can-api-gateway-do)
+    - [Same Origin Policy](#same-origin-policy)
+    - [Cross-Origin Resource Sharing (CORS)](#cross-origin-resource-sharing-cors)
+    - [API Gateway Exam Tips](#api-gateway-exam-tips)
+- [Kinesis](#kinesis)
+    - [What is streaming data?](#what-is-streaming-data)
+    - [What is Kinesis?](#what-is-kinesis) 
+    - [What are the core Kinesis Services](#what-are-the-core-kinesis-services)
+    - [Kinesis Exam Tips](#kinesis-exam-tips)
+
+
 ## VPC
 * Three subnet types: Private, Public and VPN
 * Single Region, multi AZs
@@ -1277,3 +1306,120 @@ Some AWS products have other ways to secure their resources
 * If a request to change some data is successful, the change is committed and safely stored. However, the change must be replicated across IAM, which can take some time. Such changes include creating or updating users, groups, roles, or policies. We recommend that you do not include such IAM changes in the critical, high-availability code paths of your application. 
 * Policies and Users: Actions or resources that are not explicitly allowed are denied by default.
 * You cannot attach a resource-based policy to an IAM identity.
+
+# Amazon SQS
+## What is Amazon SQS?
+* Amazon SQS is a web service that gives you access to a message queue that can be used to store messages while waiting for a computer to process them. 
+* Amazon SQS is a distributed queue system that enables web service applications to quickly and reliably queue messages that one component in the application generates to be consumed by another component. A queue is a temporary repository for messages that are awaiting processing
+* Using Amazon SQS, you can decouple the components of an application so they run independently, with Amazon SQS easing message management between components. Any component of a distributed application can store messages in a fail-safe queue. Messages can contain up to 256 KB of text in any format. Any component can later retrieve the messages programmatically using the Amazon SQS API
+* The queue acts as a buffer between the component producing and saving data, and the component receiving the data for processing. This means the queue resolves issues that arise if the producer is producing work faster than the consumer can process it, or if the producer or consumer are only intermittently connected to the network
+## Queues Types
+* Standard Queues (default)
+    * Amazon SQS offers standard as the default queue type. A standard queue lets you have a nearly-unlimited number of transactions per second. Standard queues guarantee that a message is delivered at least once.
+    However, occasionally (due of the highly-distributed architecture that allows high throughput), more that one copy of a message might be delivered out of order. Standard queues provide best-effort ordering which ensures that messages are generally delivered in the same order as they are sent
+* FIFO Queue 
+    * The FIFO queue complements the standard queue. The most important features of this queue type are FIFO (first-in-first-out) delivery and exactly-once processing: The order in which messages are sent and received is strictly preserved and a message is delivered once and remains available until a consumer processes and deletes it; duplicates are not introduced into the queue. FIFO queue also support message groups that allow multiple ordered message groups within a single queue. FIFO queues are limited to 300 transactions per second (TPS), but have all the capabilities of standard queues
+## SQS Key Facts
+* SQS is pull based. noy pushed base
+* Messages are 256 KB in size
+* Messages can be kept in the queue from 1 minute to 14 days. The default is 4 days
+* Visibility Time Out is the amount of time that the message is invisible in the SQS queue after a reader picks up that message. Provided the job is processed before the visibility time out expires, the message will then be deleted from the queue. If the job is not processed within that time, the message will become visible again an another reader will process it. This could result in the same message being delivered twice
+* Visibility Time Out is 12 hours
+* SQS guarantees that your messages will be processed at least once.
+* Amazon SQS long polling is a way to retrieve messages from your Amazon SQS queues. While the regular short polling returns inmediately, even if the message queue being polled is empty, long polling dosen't return a response until a message arrives in the message queue, or the pong poll times out
+# Amazon SWF
+## What is SWF?
+* Amazon Simple Workflow Service (Amazon SWF) is a web service that makes it easy to coordinate work across distributed application components. Amazon SWF enables applications for range of use cases, including media processing, web application back-ends, bussines process workflows, and analytics pipelines, to be designed as a coordination of tasks. Tasks represent invocations of variuos processing steps in an application which can be performed by executable code, web service calls, human actions , and scripts
+
+## SWF vs SQS
+* SQS has a retention period of 14 days, SWF up to 1 year for workflow executions
+* Amazon SWF presents a task-oriented API, whereas Amazon SQS offers a message-oriented API
+* Amazon SWF ensures that a task is assigned only once and is never duplicated. With Amazon SQS, you need to handle duplicated messages and may also need to ensure that a message is processed only once
+* Amazon SWF keeps track of all the tasks and events in an application. With Amazon SQS, you need to implement your own application-level tracking, especially if your application uses multiples queues
+## SWF Actors
+* Workflow Starters: An application that can initiate (start) a workflow. Could be your e-commerce website when placing an order or a mobile app searching for bus times
+* Deciders: Control the flow of activity tasks in a workflow execution. If something has finished in a workflow (or fails) a Decider decides what to do next
+* Activity Workers: Carry out the activity tasks
+# Amazon SNS
+## What is SNS?
+* Amazon Simple Notification Service (Amazon SNS) is a web service that makes it easy to set up, operate, and send notifications from the cloud. It provides developers with a highly scalable, flexible, and cost-effective capability to publish messages from an application and inmediately deliver them to subscribers or other applications
+* Push notifications to Apple, Google, Fire OS and Windows devices, as well as Android devices in China with Baidu Cloud Push
+* Besides pushing cloud notifications directly to mobile devices, Amazon SNS can also deliver notifications by SMS text message or email, to Amazon Simple Queue Service (SQS) queues, or to any HTTP endpoint. SNS notifications can also trigger Lambda functions. When a message is published to an SNS topic that has a Lambda function subscribed to it, the Lambda function is invoked ith the payload of the published message. The Lambda function receives the message payload as an input parameter and can manipulate the information in the message, publish the message to other SNS topics, or send the message to other AWS services
+* SNS alows you to gropu multiple recipients using topics. A topic is an "access point" for allowing recipients to dynamically subscribe for identical copies of the same notification. One topic can support deliveries to multiple endpoint types -- for example, you can group together iOS, Android and SMS recipients. When you publish once to a topic, SNS delivers appropiately formatted copies of your message to each subscriber
+## SNS Benefits
+* Instantaneous, push-based delivery (no polling)
+* Simple APIs and easy integration with applications
+* Flexible message delivery over multiple transport protocols
+* inexpensive, pay-as-you-go model with no up-front costs
+* Web-based AWS Management Console offers the simplicity of a point-and-click interface
+## SNS vs SQS
+* Both Messaging Services in AWS
+* SNS: Push
+* SQS: Polls (Pulls)
+## SNS Pricing
+* Users pay $0.50 per 1 million Amazon SNS requests
+* $0.06 per 100.000 Notifications deliveries over HTTP
+* $0.75 per 100 Notifications deliveries over SMS
+* $2.00 per 100.000 Notification deliveries over Email
+
+# Amazon Elastic Transcoder
+## What is Elastic Transcoder?
+* Media Transcoder in the Cloud. 
+* Convert media files from their original source format in to different formats that will play on smartphones, tables, PC's etc.
+* Provides transcoding presets for popular output formats, which means that you don't need to guess about which settings work best on particular devices.
+* Pay based on the minutes that you transcode and the resolution at which you transcode
+
+# API Gateway
+## What is API Gateway?
+* Amazon aPI Gateway is a fully managed service that makes it eas for developers to publish, maintain, monitor, and secure APIs at any scale. With a few clicks in the AWS Management Console, you can create an API that acts as a "front door" for applications to access data, bussines logic, or functionality from your back-end services, such as applications running on Amazon Elastic Compute Cloud (Amazon EC2), code running on AWS Lambda, or any web application
+## What is API Caching? 
+* You can enable API caching in Amazon API Gateway to cache your endpoint's response. With caching, you can reduce the number of calls made to your endpoint and also improve the latency of the requests to your API. When you enable caching for stage, API Gateway caches responses from your endpoint for a specified time-to-live (TTL) period, in seconds. API Gateway then responds to the request by looking up the endpoint response from the cache instead of making a request to your endpoint
+## What can API Gateway do?
+* Low cost & efficient
+* Scales effortlessly
+* You can throttle requests to prevent attacks
+* Connect to CloudWatch to log all requests
+
+## Same Origin Policy 
+* In computing, the same-origin policy is an important concept in the web application security model. Under the policy, a web browser permits scripts contained in a first web page to access data in a second web page, but only if both web pages have the same origin
+## Cross-Origin Resource Sharing (CORS)
+* CORS is one way the server ar the other end (not the client code in the browser) can relax the same-origin policy
+* Cross-origin resource sharing (CORS) is a mechanism that allows restricted resources (e.g. fonts) on a web page to be requested from another domain outside the domain from which the first resource was served.
+* Error - "Origin policy cannot be read at the remote resource?". You need to enable CORS on API Gateway
+## API Gateway Exam Tips
+* Remember what API Gateway is at a high level
+* API Gateway has caching capabilities to increase performance
+* API Gateway is low cost and scales automatically 
+* You can throttle API Gateway to prevent attacks
+* You can log results to CloudWatch
+* If you are using Javascript/AJAX that uses multiple domains with API Gateway, ensure that you have enabled CORS on API Gateway
+
+# Kinesis
+## What is streaming data?
+* Streaming data is data that is generated continuosly by thounsands of data sources, which typically send in the data records simultaneously, and in small sizes (order of Kilobytes).
+    * Purchases from online stores (think amazon.com)
+    * Stock prices
+    * Game data (as the gamer plays)
+    * Social network data
+    * Geospatial data (think uber.com)
+    * IoT sensor data
+## What is Kinesis?
+* Amazon Kinesis is a platform on AWS to send your streaming data too. Kinesis makes it easy to load and analize streaming data, and also providing the ability for you to bould your own custom applications for you bussines needs
+## What are the core Kinesis Services
+* Kinesis Streams:
+    * Kinesis Streams consist of shards
+        * Store data in shards
+        * 5 transactions per second for reads, up to a maximum total data read rate of 2 MB per second and up to 1.000 records per second for writes, up to a maximun total data write fo 1 MB per second (including partition keys)
+        * The data capacity of your stream is a function of the number of shards that you specify for the stream. The total capacity of the stream is the sum of the capacities of its shards
+* Kinesis Firehose:
+    * Used to capture and send data directly into S3 or RedShift
+    * Once data is stores in S3 or RedShift, it can be used for analisys
+    * Needs agent in between to capture data nito the stream. i.e. Kinesis Agent
+    * Has an option to buffer the data from the incoming stream. So that there will be no loss of data
+* Kinesis Analitycs
+    * A way to analize data from Kinesis using SQL queries
+
+ ## Kinesis Exam Tips
+ * Know the difference between Kinesis Streams and Kinesis Firehose. You will be given scenario questions and you must choose the most relevant choice
+ * Understand what Kinesis Analitycs is
+
