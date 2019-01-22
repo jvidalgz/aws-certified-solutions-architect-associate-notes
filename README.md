@@ -95,9 +95,9 @@ AWS Certified Solutions Architect  Associate -  Notes
         - [Computes Nodes](#computes-nodes)
     - [Backups and Fault Tolerance](#backups-and-fault-tolerance)
 - [Aurora]
-    -[What is Aurora?](#what-is-aurora)
-    -[Aurora Autoscaling](#aurora-autoscaling)
-    -[Aurora Replicas](#aurora-replicas)
+    - [What is Aurora?](#what-is-aurora)
+    - [Aurora Autoscaling](#aurora-autoscaling)
+    - [Aurora Replicas](#aurora-replicas)
 - [Understanding AWS Security](#understanding-aws-security)
     - [Physical Access](#physical-access)
     - [Security Certifications and AWS Compliance](#security-certifications-and-aws-compliance)
