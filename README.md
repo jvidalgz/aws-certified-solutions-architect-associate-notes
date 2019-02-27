@@ -199,7 +199,7 @@ AWS Certified Solutions Architect  Associate -  Notes
     - [Customer Security Responsibilities](#customer-security-responsibilities)
     - [Storage Decommissioning](#storage-decommissioning)
     - [Network Security](#network-security)
-    - [Network Monitoring and Protection](#network-monitoring and-protection)
+    - [Network Monitoring and Protection](#network-monitoring-and-protection)
     - [AWS Credentials](#aws-credentials)
     - [AWS Trusted Advisor ](#aws-trusted-advisor)
     - [Instance Isolation](#instance-isolation)
