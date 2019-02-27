@@ -188,6 +188,24 @@ AWS Certified Solutions Architect  Associate -  Notes
     - [What is Kinesis?](#what-is-kinesis) 
     - [What are the core Kinesis Services](#what-are-the-core-kinesis-services)
     - [Kinesis Exam Tips](#kinesis-exam-tips)
+- [Overview of AWS Whitepaper](#overview-of-aws-whitepaper)
+    - [What is Cloud Computing?](#what-is-cloud-computing)
+    - [6 Advantages Of Cloud](#6-advantages-of-cloud)
+    - [Security](#security)
+    - [Compliance](#compliance)
+- [Overview of Security Processes](#overview-of-security-processes)
+    - [Share Security Model](#share-security-model)
+    - [AWS Security Responsibilities](#aws-security-responsibilities)
+    - [Customer Security Responsibilities](#customer-security-responsibilities)
+    - [Storage Decommissioning](#storage-decommissioning)
+    - [Network Security](#network-security)
+    - [Network Monitoring & Protection](#network-monitoring-&-protection)
+    - [AWS Credentials](#aws-credentials)
+    - [AWS Trusted Advisor ](#aws-trusted-advisor)
+    - [Instance Isolation](#instance-isolation)
+    - [Other Considerations](#other-considerations)
+- [Risk & Compliance Whitepaper](#risk-&-compliance-whitepaper)
+    - [Share Responsibility Model](#share-responsibility-model)
 
 
 ## VPC
@@ -1423,3 +1441,95 @@ Some AWS products have other ways to secure their resources
  * Know the difference between Kinesis Streams and Kinesis Firehose. You will be given scenario questions and you must choose the most relevant choice
  * Understand what Kinesis Analitycs is
 
+# Overview of AWS Whitepaper
+## What is Cloud Computing?
+* Cloud computing is the on-demand delivery of IT resources and applications via the internet with pay-as-you-go pricing. Cloud computing provides a simple way to access servers, storage, databases, and a broad set of application services over the internet.
+* Cloud computing provides such as AWS own and maintain the network-connected hardware required for these application services, while you provision and use what you need using a web application
+## 6 Advantages Of Cloud
+* Trade Capital Expense for variable expense
+* Benefit from massive economies of scale
+* Stop guessing about capacity
+* Increase speed and agility
+* Stop spending money running and maintaining data centers
+* Go global in minutes
+## Security
+* State of the art electronic surveillance and multi factor access control systems
+* Staffed 24 x 7 by security guards
+* Access is authorized on a "least privilege basis"
+## Compliance
+* SOC 1/SSAE 16/ISAE 3402 (formerly SAS 70 Type II)
+* SOC 2
+* SOC 3
+* FISMA, DIACAP and FedRAMP
+* PCI DSS Level 1
+* ISO 27001
+* ISO 9001
+* ITAR
+* FIPS 140-2
+* Several industry-specific standars
+    * HIPAA
+    * Cloud Security Alliance (CSA)
+    * Motion Picture Association of America (MPAA)
+# Overview of Security Processes
+## Share Security Model 
+* AWS is responsible for securing the underlying infraestructure that supports the cloud, and you're responsible for anything you put on the cloud or connect to the cloud.
+## AWS Security Responsibilities
+* Amazon Web Services is responsible for protecting the global infraestructure that runs all of the services offered in the AWS cloud. This infraestructure is comprised fo the hardware, software, networking and facilities that run AWS services.
+* AWS is responsible for the security configuration of its products that are considered managed services. Examples of these types of services include Amazon DynamoDB, Amazon RDS, Amazon Redshift, Amazon Elastic MapReduce, Amazon WorkSpaces 
+## Customer Security Responsibilities
+* IAAS - such as Amazon EC2, Amazon VPC, and Amazon S3 are completely under your control and require you to perform all of the necessary security configuration and management tasks.
+* Managed Services, AWS is responsible for patching, antivirus, however you are responsible for account management and user access. It's recommended that MFA be implemented, communicate to these services using SSL/TLS and that API/user activity logging be setup with CloudTrail
+## Storage Decommissioning
+* When a storage device has reached the end of its useful life, AWS procedures include a decommissioning process that is designed to prevent customer data from being exposed to unauthorized individuals.
+* AWS uses the techniques detailed in DoD 5220.22-M ("National Industrial Security Program Operating Manual") or NIST 800-88 ("Guidelines for Media Sanitization") to destroy data as part of the decomissioning process.
+* All decommissioned magnetic storage devices are degaussed and physically destroyed in accordance with industry-standard practices.
+## Network Security
+* Transmission Protection 
+    * You can connect to anAWS access point via HTTP or HTTPS using Secure Sockets Layer (SSL), a cryptographic protocol that is designed to protect against eavesdropping, tampering, and message forgery.
+    * For costumers who require additional layers of network security, AWS offers the Amazon Virtual Private Cloud (VPC), which provides a private subnet within the AWS cloud, and the ability to use an IPsec Virtual Private Network (VPN) device to provide an encrypted tunner between the Amazon VPC and your data center
+* Amazon Corporate Segregation
+    *  Logically, the AWS Production network is segregated from the Amazon Corporate network by means of a complete set of network security / segregation devices
+## Network Monitoring & Protection
+* DDoS
+* Man in the middle attacks (MITM)
+* IP Spoofing
+    * The AWS-controlled, host-based firewall infrarestructure will not permit an instance to send traffic with a source IP or MAC address other that its own
+    * These scans must be limited to your own instances and must not violate the AWS Acceptable Use Policy. You must request a vulnerability scan in advance
+    * Unauthorized port scans by Amazon EC2 customers are a violation of the AWS Acceptable Use Policy. You may request permission to conduct vulnerability scans as required to meet your specific compliance requirements.
+    * These scans must be limited to your own instances and must not violate the AWS Acceptable Use Policy. You must request a vulnerability scan in advance
+* Port Scanning
+* Packet Sniffing by other tenants
+## AWS Credentials
+| Credential Type | Use | Description | 
+|------|:---------------------------|:------|
+|Passwords| AWS root account or IAM user account login to the AWS Management Console | A string of characters used to log into your AWS account or IAM account. AWS passwords must be a minimun of 6 characters and may be up to 128 characters 
+|Multi-Factor (MFA) | AWS root account or IAM user account login to the AWS Management Console | A six-digit sigle-use code that is required in addition to your password to log in your AWS Account or IAM user account
+|Access Key|Digitally signed request to AWS APIs (using AWS SDK, CLI or REST/Query APIs)|Includes an access key ID and secret access key. You use access keys to digitally sign programmatic requests that you make to AWS
+|Key Pairs|<ul><li>SSH login to EC2 instances</li><li>CloudFront signed URLs</li></ul>| A key pair is required to connect to an EC2 instance launched from a public AMI. The keys that Amazon EC2 uses are 1024-bit SSH-2 RSA keys. You can have a key pair generated automatically for you when you launch the instance or you can upload your own
+|X.509 Certificates|<ul><li>Digitally signed SOAP request to AWS APIs</li><li>SSL server certificates for HTTPS</li></ul>| X.509 certificates are only used to sign SOAP-based request (currently used only with Amazon S3). You can have AWS create an X.509 certificate and private key that you can download, or you can upload your own certificate by using the Security Credentials page
+## AWS Trusted Advisor 
+* Trusted Advisor inspects your AWS environment and makes recommendations when opportunities may exist to save money, improve system performance, or close security gaps
+* It provides alerts on several of the most common security misconfigurations that can occur, including leaving certain ports open that make you vulnerable to hacking and unauthorized access, neglecting to create IAM accounts for your internal users, allowing public access to Amazon S3 buckets, not turning on user activity loggin (AWS CliudTrail), or not using MFA on your root AWS account
+## Instance Isolation
+* Different instance running on the same physical machine are isolated from each other via the Xen hypervisor. In addition, the AWS firewall resides within the hypervisor layer, between the physical network interface and the instance's virtual interface
+* All packets must pass through this layer, thus an instance's neighbors have no more access to that instance than any other host on the Internet and can be therated as if they are on separate physical hosts. The physical RAM is separated using similar mechanisms
+* Customer instances have no access to raw disk devices, but instead are presented with virtualized disks. The AWS proprietary disk virtualization layer automatically resets every block of storage used by the customer, so that one customer's data is never unintentionally exposed to another
+* In addition, memory allocated to guests is scrubbed (set to zero) by the hypervisor when it is unallocated to a guest. The memory is not returned to the pool of free memory available for new allocations until the memory scrubbing is complete
+## Other Considerations
+* Guest Operating System 
+    * Virtual instances are completely controlled by you, the customer. You have full root access or administrative control over acoounts, services, and applications. AWS does not have any access rights to your instances or the guest OS.
+    * Encryption of sensitive data is generally a good security practice, and AWS provides the ability to encrypt EBS volumes and their snapshots with AES-256. The encryption occurs on the servers that host the EC2 instances, providing encryption of data as it moves between EC2 instances and EBS storage
+    * In order to be able to do this efficiently and with low latency, the EBS encryption feature is only available on EC2's more powerful instance types (e.g. M3, C3, R3, G2)
+* Firewall: Amazon EC2 provides a complete firewall solution; this mandatory inbound firewall is configured in a default deny-all mode and Amazon EC2 customers must explicitly open the ports needed to allow inbound traffic
+* Elastic Load Balancing: SSL Termination on the load balancer is supported. Allow you to identify the originating IP address of a client connection to your servers, wheter you're using HTTPS or TCP load balancing 
+* Direct Connect: Bypass Internet service providers in your network path. You can procure rack space within the facility housing the AWS Direct Connect location and deploy your euipment nearby. Once deployed, you can connect this equipment to AWS Direct Connect using a cross-connect
+* Using industry standard 802.1q VLANs, the dedicated connection can be partitioned into multiple virtual interfaces. This allows you to use the same connection to access public resources such as objects stored in Amazon S3 using public IP address space, and private resources such as Amazon EC2 instances running within an Amazon VPC using private IP space, while maintaining network separation between the public and private environments
+# Risk & Compliance Whitepaper
+## Share Responsibility Model
+* Moving IT infraestructure to AWS services creates a model of shared responsibility between the customer and AWS. This shared model can hekp relieve customer's operational burden as AWS operates, manages and controls the components from the host operating system and virtualization layer down to the physical security of the facilities in which the service operates.
+* The customer assumes responsibility and management of the guest operating system (including updates and security patches), other associated application software as well as the configuration of the AWS provides security group firewall
+* AWS management has developed a strategic business plan which includes risk identification and the implementation of controls to mitigate or manage risk . AWS management reevaluates the strtegic business plan at least bianually.
+* This process requires management to identify risks within its areas of responsibility and to implement appropiate measures designed to address those risks.
+* AWS Security regularly scans all Internet facing service endpoint IP addresses for vulnerabilities (these scans do not nclude customer instances). AWS Security notifies the appropriate parties to remediate any identified vulnerabilities. In adition, external vulnerability threat assessments are performed regularly by independent security firms.
+* Findings and recommendations resulting from these assessments are categorized and delivered to AWS leadership. These scans are done in a manner for the health and viability of the underlying AWS infrastructure and are not meant to replace the customer's own vulnerability scans required to meet their specific compliance requirements.
+* Customers can request permission to conduct scans of their cloud infraestructure as long as they are limited to the customer's instances and do not violate the AWS Acceptable Use Policy.
