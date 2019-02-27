@@ -199,12 +199,12 @@ AWS Certified Solutions Architect  Associate -  Notes
     - [Customer Security Responsibilities](#customer-security-responsibilities)
     - [Storage Decommissioning](#storage-decommissioning)
     - [Network Security](#network-security)
-    - [Network Monitoring & Protection](#network-monitoring-&-protection)
+    - [Network Monitoring and Protection](#network-monitoring and-protection)
     - [AWS Credentials](#aws-credentials)
     - [AWS Trusted Advisor ](#aws-trusted-advisor)
     - [Instance Isolation](#instance-isolation)
     - [Other Considerations](#other-considerations)
-- [Risk & Compliance Whitepaper](#risk-&-compliance-whitepaper)
+- [Risk and Compliance Whitepaper](#risk-and-compliance-whitepaper)
     - [Share Responsibility Model](#share-responsibility-model)
 
 
@@ -1489,7 +1489,7 @@ Some AWS products have other ways to secure their resources
     * For costumers who require additional layers of network security, AWS offers the Amazon Virtual Private Cloud (VPC), which provides a private subnet within the AWS cloud, and the ability to use an IPsec Virtual Private Network (VPN) device to provide an encrypted tunner between the Amazon VPC and your data center
 * Amazon Corporate Segregation
     *  Logically, the AWS Production network is segregated from the Amazon Corporate network by means of a complete set of network security / segregation devices
-## Network Monitoring & Protection
+## Network Monitoring and Protection
 * DDoS
 * Man in the middle attacks (MITM)
 * IP Spoofing
@@ -1524,7 +1524,7 @@ Some AWS products have other ways to secure their resources
 * Elastic Load Balancing: SSL Termination on the load balancer is supported. Allow you to identify the originating IP address of a client connection to your servers, wheter you're using HTTPS or TCP load balancing 
 * Direct Connect: Bypass Internet service providers in your network path. You can procure rack space within the facility housing the AWS Direct Connect location and deploy your euipment nearby. Once deployed, you can connect this equipment to AWS Direct Connect using a cross-connect
 * Using industry standard 802.1q VLANs, the dedicated connection can be partitioned into multiple virtual interfaces. This allows you to use the same connection to access public resources such as objects stored in Amazon S3 using public IP address space, and private resources such as Amazon EC2 instances running within an Amazon VPC using private IP space, while maintaining network separation between the public and private environments
-# Risk & Compliance Whitepaper
+# Risk and Compliance Whitepaper
 ## Share Responsibility Model
 * Moving IT infraestructure to AWS services creates a model of shared responsibility between the customer and AWS. This shared model can hekp relieve customer's operational burden as AWS operates, manages and controls the components from the host operating system and virtualization layer down to the physical security of the facilities in which the service operates.
 * The customer assumes responsibility and management of the guest operating system (including updates and security patches), other associated application software as well as the configuration of the AWS provides security group firewall
